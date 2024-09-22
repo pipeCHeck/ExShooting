@@ -98,7 +98,7 @@ public class UI_SelectManager : MonoBehaviour
             switch (GetFocusingButtonIndex())
             {
                 case 0: // 게임모드
-                    SceneManager.LoadScene("TestGameScene");
+                    SceneManager.LoadScene("GameScene");
                     break;
                 case 1: // 연습모드
 

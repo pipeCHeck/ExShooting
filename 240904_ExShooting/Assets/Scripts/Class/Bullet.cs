@@ -32,16 +32,13 @@ public class Bullet : Object
         if(collision.transform.tag == "Enemy" && this.GetTag() == "PlayerBullet")
         {
             collision.gameObject.GetComponent<Character>().SetDamnagedHp(damage);
-            Debug.Log(damage);
-            Debug.Log(collision.GetComponent<Character>().GetHp() + " Enemy");
-
+            Destroy(this.gameObject);
         }
         if (collision.transform.tag == "Player" && this.GetTag() == "EnemyBullet")
         {
             collision.gameObject.GetComponent<Character>().SetDamnagedHp(damage);
-            Debug.Log(damage);
+            Destroy(this.gameObject);
 
-            Debug.Log(collision.GetComponent<Character>().GetHp() + " Player");
         }
     }
 
