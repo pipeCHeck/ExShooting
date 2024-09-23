@@ -9,6 +9,8 @@ TagManager:
   - DeadEffectsCtrl
   - EnemyCol
   - PlayerCol
+  - Enemy
+  - PlayerBullet
   layers:
   - Default
   - TransparentFX
