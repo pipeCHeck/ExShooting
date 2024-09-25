@@ -30,6 +30,8 @@ public class Player : Attacker
         SetBulletSpeed(50f);
     }
 
+
+    //플레이어가 직접 조작하는 독단적인 player클래스의 입력 모음. 현재 이동 및 공격이 존재한다
     void PlayerControl()
     {
         if(Input.GetKey(KeyCode.LeftArrow))
@@ -48,12 +50,13 @@ public class Player : Attacker
         {
             ObjectMove(Vector3.down, GetMoveSpeed());
         }
-        if (Input.GetKey(KeyCode.Z) && GetIsReadyAttack())
+        if (Input.GetKey(KeyCode.Z) && GetIsReadyAttack()) // GetIsReadyAttack함수로 공격 딜레이조건을 확인 후 발동이 된다
         {
             AttackReady(); //항상 공격할 때 이 함수를 사용해야 함.
             for (int i = 0; i < shootPosition.Length; i++)
             {
-                attackManage.ShootStraightBullet(bullet, this.gameObject, shootPosition[i], 0, GetBulletSpeed()); //각 오브젝트(캐릭터 클래스들)들이 원하는 총의 속도값을 소지한 후, 총알을 발사할 때 해당 값을 전송하여 총알의 속도를 정함.
+                //각 오브젝트(캐릭터 클래스들)들이 원하는 총의 속도값을 소지한 후, 총알을 발사할 때 해당 값을 전송하여 총알의 속도를 정함.
+                attackManage.ShootStraightBullet(bullet, this.gameObject, shootPosition[i], 0, GetBulletSpeed());
             }
         }
     }

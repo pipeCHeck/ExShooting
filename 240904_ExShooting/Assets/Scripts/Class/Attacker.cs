@@ -18,7 +18,8 @@ public class Attacker : Character
 
     protected IEnumerator AttackDelay()
     {
-        if (attackManage == null) {Debug.Log("attackManage미할당. Init함수를 상속받은 뒤 실행해주세요.");} // 추후 실수를 빠르게 파악하기 위한 작업. 가장 실수하기 쉽고 완전히 해석하지 못했다면 인지하지 못할 수 있기 때문
+        // 추후 실수를 빠르게 파악하기 위한 작업. 가장 실수하기 쉽고 완전히 해석하지 못했다면 인지하지 못할 수 있기 때문
+        if (attackManage == null) {Debug.Log("attackManage미할당. Init함수를 상속받은 뒤 실행해주세요.");} 
         if (attackDelay == 0) { Debug.Log("attackDelay has not init"); }
 
         isReadyAttack = false;
@@ -26,9 +27,11 @@ public class Attacker : Character
         isReadyAttack = true;
     }
 
-    protected override void Init() // 해당 초기화는 반드시 하위클래스들이 반드시 호출해줘야 attackManage를 사용할 수 있음.
+    // 해당 초기화는 반드시 하위클래스들이 반드시 호출해줘야 attackManage를 사용할 수 있음.
+    protected override void Init()
     {
-        attackManage = gameObject.AddComponent<AttackManage>(); // 오브젝트에 존재하는 스크립트가 아니더라도 유니티는 형식적으로 다른 순수의 스크립트를 불러올려면 해당 코드로 불러와야 됨
+        // 오브젝트에 존재하는 스크립트가 아니더라도 유니티는 형식적으로 다른 순수의 스크립트를 불러올려면 해당 코드로 불러와야 됨
+        attackManage = gameObject.AddComponent<AttackManage>(); 
     }
 
     protected void AttackReady()
@@ -38,7 +41,8 @@ public class Attacker : Character
             shootPosition = new Vector3[InputShootPosition.Length];
             for (int i = 0; i < shootPosition.Length; i++)
             {
-                shootPosition[i] = this.gameObject.transform.position + InputShootPosition[i]; // shootVector의 값과 캐릭터의 위치를 더하면 발사위치로 계산됨.
+                // shootVector의 값과 캐릭터의 위치를 더하면 발사위치로 계산됨.
+                shootPosition[i] = this.gameObject.transform.position + InputShootPosition[i]; 
             }
         }
         else
@@ -49,6 +53,7 @@ public class Attacker : Character
         StartCoroutine(AttackDelay()); //총을 발사할 것이므로 재발사하기 위한 대기시간.
     }
 
+    //getset
     protected void SetAttackDelay(float value)
     {
         attackDelay = value;

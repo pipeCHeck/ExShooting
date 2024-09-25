@@ -11,7 +11,9 @@ public class Character : Object
     {
         hp = maxHp;
     }
+    virtual protected void Init() { }
 
+    //getset
     public void SetDamnagedHp(float damageValue)
     {
         hp -= damageValue;
@@ -21,12 +23,14 @@ public class Character : Object
         }
     }
 
-    public void SetTransHp(float transHpValue) // 추후 회복하거나, 강제로 체력이 줄어들 수 있으므로 일방적인 데미지와 다른 개념으로 함수 생성
+    // 추후 회복하거나, 강제로 체력이 줄어들 수 있으므로 일방적인 데미지와 다른 개념으로 함수 생성
+    public void SetTransHp(float transHpValue) 
     {
         hp = transHpValue;
     }
 
-    protected void SetMaxHp(float value) // 추후 기획에 의해 공용으로 변경될 수 있음
+    // 추후 기획에 의해 공용으로 변경될 수 있음
+    protected void SetMaxHp(float value)
     {
         maxHp = value;
     }
@@ -40,8 +44,6 @@ public class Character : Object
     {
         return hp;
     }
-
-    virtual protected void Init()   {   }
 
     public int GetDamage()
     {
