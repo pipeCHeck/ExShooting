@@ -24,7 +24,7 @@ public class Player : Attacker
 
         SetMaxHp(3); //노멀 난이도 기준으로 초기 설정
         SetTransHp(GetMaxHp());
-        SetMoveSpeed(43f);
+        SetMoveSpeed(20f); //기본값43 (테스트 중 불편함으로 잠시 줄어놓았음)
         SetTag("Player");
         SetAttackDelay(0.2f);
         SetBulletSpeed(50f);

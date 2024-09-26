@@ -11,6 +11,7 @@ TagManager:
   - PlayerCol
   - Enemy
   - PlayerBullet
+  - CardManager
   layers:
   - Default
   - TransparentFX
