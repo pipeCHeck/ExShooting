@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : Attacker
 {
-    
+    PlayerConcentrater concentrate;
 
     // Start is called before the first frame update
     void Start()
@@ -21,20 +21,28 @@ public class Player : Attacker
     protected override void Init()
     {
         base.Init(); // Road attackManage
-
+        concentrate = gameObject.AddComponent<PlayerConcentrater>(); // 스크립트 추가
+        concentrate.ConcentInit();
         SetMaxHp(3); //노멀 난이도 기준으로 초기 설정
         SetTransHp(GetMaxHp());
         SetMoveSpeed(20f); //기본값43 (테스트 중 불편함으로 잠시 줄어놓았음)
         SetTag("Player");
-        SetAttackDelay(0.2f);
+        SetAttackDelay(0.05f);
         SetBulletSpeed(50f);
     }
 
 
-    //플레이어가 직접 조작하는 독단적인 player클래스의 입력 모음. 현재 이동 및 공격이 존재한다
+    //플레이어의 여러가지 입력 모음
     void PlayerControl()
     {
-        if(Input.GetKey(KeyCode.LeftArrow))
+        PlayerMove();
+        PlayerAttack();
+        concentrate.ConcentrateControl(this.gameObject);
+    }
+
+    void PlayerMove()
+    {
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
             ObjectMove(Vector3.left, GetMoveSpeed());
         }
@@ -50,7 +58,14 @@ public class Player : Attacker
         {
             ObjectMove(Vector3.down, GetMoveSpeed());
         }
-        if (Input.GetKey(KeyCode.Z) && GetIsReadyAttack()) // GetIsReadyAttack함수로 공격 딜레이조건을 확인 후 발동이 된다
+
+    }
+
+    //일반적인 슈팅 공격과 영창 시스템의 공격 키들 모음
+    void PlayerAttack() 
+    {
+        // GetIsReadyAttack함수로 공격 딜레이조건을 확인 후 발동이 된다
+        if (Input.GetKey(KeyCode.Z) && GetIsReadyAttack()) 
         {
             AttackReady(); //항상 공격할 때 이 함수를 사용해야 함.
             for (int i = 0; i < shootPosition.Length; i++)
@@ -59,7 +74,11 @@ public class Player : Attacker
                 attackManage.ShootStraightBullet(bullet, this.gameObject, shootPosition[i], 0, GetBulletSpeed());
             }
         }
+
+
+
     }
+
 
     
 }
