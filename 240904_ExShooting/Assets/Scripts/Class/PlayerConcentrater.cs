@@ -21,9 +21,10 @@ public class PlayerConcentrater : MonoBehaviour
         powerUp = 5; // 임시값으로 이것 역시 구조가 변경될 예정
         isReadySkill = false; //스킬이 준비가 안돼야 키입력이나 파워를 쌓을 수 있으니 false 
         buffTime = 10f;
-        //추후 배열의 길이가 길어질 수도 있음
-        coroutines = new IEnumerator[2];
+        //추후 배열의 길이가 길어질 수도 있음. 현재 각각 버프, 파워 증가, 파워감소 순으로 존재
+        coroutines = new IEnumerator[3];
         coroutines[0] = PlalyerSkillBuff();
+        coroutines[2] = ConcentraitPowerDown();
         isPowerUp = true;
     }
 
@@ -60,15 +61,21 @@ public class PlayerConcentrater : MonoBehaviour
             //코루틴을 제대로 처음부터 시작하려면 스탑한 이후 내장된 코루틴 밸류를 삭제해야함.
             isConcentrating = false;
             StopCoroutine(coroutines[1]);
+
+            coroutines[2] = ConcentraitPowerDown();
+            StartCoroutine(coroutines[2]);
             coroutines[1] = null;
             player.SetMoveSpeed(20f); //영창 효과 해제
         }
-        else
+        else //각각 파워업과 파워 다운은 반대관계가 되어야 한다
         {
             //삭제했으니 다시 삽입하는 과정
             isConcentrating = true;
+            StopCoroutine(coroutines[2]);
+
             coroutines[1] = ConcentraitPowerUp();
             StartCoroutine(coroutines[1]);
+            coroutines[2] = null;
             player.SetMoveSpeed(7f); //영창 효과 적용
         }
     }
@@ -107,6 +114,24 @@ public class PlayerConcentrater : MonoBehaviour
             //stopCoroutine에 의해 중단되기에 재귀 함수로 사용해도 무방
             goto ReConcentrait;
         }
+    }
+
+    IEnumerator ConcentraitPowerDown()
+    {
+    RePowerDown:
+        yield return new WaitForSeconds(1f);
+        if(power >= 5)
+        {
+            Debug.Log("파워 감소");
+            SetPower(GetPower() - 5f);
+        }
+        else if(power > 0)
+        {
+            Debug.Log("파워 감소");
+            SetPower(0f);
+        }
+        goto RePowerDown;
+        
     }
 
     IEnumerator ConcentraitCoolTime()
