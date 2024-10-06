@@ -15,6 +15,7 @@ public class EnemyTest : Attacker // ¹ßÇ¥¸¦ À§ÇÑ º¸¿©ÁÖ±â½Ä Å¬·¡½º. »èÁ¦ÇÒ ¿¹Á¤À
     void Update()
     {
         Attack();
+        Move();
     }
 
     protected override void Init()
@@ -27,7 +28,7 @@ public class EnemyTest : Attacker // ¹ßÇ¥¸¦ À§ÇÑ º¸¿©ÁÖ±â½Ä Å¬·¡½º. »èÁ¦ÇÒ ¿¹Á¤À
         }
         SetMaxHp(10);
         SetTransHp(GetMaxHp());
-        SetMoveSpeed(0f);
+        SetMoveSpeed(5f);
         SetTag("Enemy"); // EnemyÀÇ °æ¿ì ÇØ´ç ÄÚµå´Â ÃßÈÄ »ý¼º½ºÅ©¸³Æ® Á¦ÀÛÇÒ ¶§ »ý¼º°ú µ¿½Ã¿¡ ÅÂ±×¼³Á¤ÇÒ ¿¹Á¤. ±×·¯¹Ç·Î °¢ Enemy½ºÅ©¸³Æ®¿¡ ÀÌ ÄÚµå´Â ³ÖÁö ¾ÊÀ» ¿¹Á¤
         SetAttackDelay(2f);
         SetBulletSpeed(5f);
@@ -45,5 +46,9 @@ public class EnemyTest : Attacker // ¹ßÇ¥¸¦ À§ÇÑ º¸¿©ÁÖ±â½Ä Å¬·¡½º. »èÁ¦ÇÒ ¿¹Á¤À
         }
     }
 
-
+    // ÀÌµ¿ ¸Þ¼­µå (Â¥ÇÇ ¹ö¸±°Å¶ó´Ï Àá±ñ ¾¸)
+    void Move()
+    {
+        ObjectMove(Vector3.down, GetMoveSpeed());
+    }
 }
