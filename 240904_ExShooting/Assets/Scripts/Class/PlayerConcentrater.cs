@@ -46,7 +46,7 @@ public class PlayerConcentrater : MonoBehaviour
         {
             Debug.Log("스킬 발동");
             isReadySkill = false;
-            SetPower(0); //스킬을 썼으니 초기화
+            TransPower(0); //스킬을 썼으니 초기화
             StartCoroutine(ConcentraitCoolTime());
         }
 
@@ -100,7 +100,7 @@ public class PlayerConcentrater : MonoBehaviour
         if (power + powerUp > maxPower)
         {
             //100을 오버하면 추푸 ui 및 기능 측면에 오류가 날 수 있음. 강제로 100조정하기
-            SetPower(100);
+            TransPower(100);
             isReadySkill = true;
             //power값이 100에 도달했으므로 버프효과 및 스킬대기 발동
             StartCoroutine(coroutines[0]);
@@ -109,7 +109,7 @@ public class PlayerConcentrater : MonoBehaviour
         else if (isConcentrating)
         {
             // 현재 파워값과 올라가는 파워값을 더해서 적용하는 방식
-            SetPower(GetPower() + powerUp);
+            SetPower(powerUp);
             Debug.Log("Power : " + GetPower());
             //stopCoroutine에 의해 중단되기에 재귀 함수로 사용해도 무방
             goto ReConcentrait;
@@ -123,12 +123,12 @@ public class PlayerConcentrater : MonoBehaviour
         if(power >= 5)
         {
             Debug.Log("파워 감소");
-            SetPower(GetPower() - 5f);
+            SetPower(-5f);
         }
         else if(power > 0)
         {
             Debug.Log("파워 감소");
-            SetPower(0f);
+            TransPower(0f);
         }
         goto RePowerDown;
         
@@ -151,8 +151,25 @@ public class PlayerConcentrater : MonoBehaviour
         return power;
     }
 
-    public void SetPower(float value)
+    //값을 조정하는 의도로 만듦
+    public void TransPower(float value)
     {
         power = value;
+    }
+
+    //현재의 값을 더하는 의도로 만듦
+    public void SetPower(float value)
+    {
+        power += value;
+    }
+
+    public bool GetIsPowerUp()
+    {
+        return isPowerUp;
+    }
+
+    public void SetIsPowerUp(bool value)
+    {
+        isPowerUp = value;
     }
 }

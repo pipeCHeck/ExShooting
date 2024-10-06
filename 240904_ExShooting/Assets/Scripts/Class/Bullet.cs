@@ -9,17 +9,23 @@ public class Bullet : Object
     // Start is called before the first frame update
     void Start()
     {
-        Destroy(gameObject, 5f);
-        if(this.GetTag() == "Untagged")
-        {
-            Debug.Log("InitTag함수 미실행.");
-        }
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        ObjectMove(Vector3.up, GetMoveSpeed());
+        //
+    }
+
+    protected override void Init()
+    {
+        base.Init();
+        Destroy(gameObject, 5f);
+        if (this.GetTag() == "Untagged")
+        {
+            Debug.Log("InitTag함수 미실행.");
+        }
     }
 
     //보통 오브젝트 회전을 할 때 해당 기능을 이용하면 됨. 요구하는 기획서에 의해 상위 클래스로 이전할 수 있음
@@ -52,7 +58,7 @@ public class Bullet : Object
         this.damage = damage;
     }
 
-    int GetDamage()
+    public int GetDamage()
     {
         return damage;
     }

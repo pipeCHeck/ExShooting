@@ -360,6 +360,7 @@
 "Assets/Scripts/Class/AttackManage.cs"
 "Assets/Scripts/Class/Bullet.cs"
 "Assets/Scripts/Class/Character.cs"
+"Assets/Scripts/Class/EnemyBullet.cs"
 "Assets/Scripts/Class/EnemyTest.cs"
 "Assets/Scripts/Class/Object.cs"
 "Assets/Scripts/Class/Player.cs"

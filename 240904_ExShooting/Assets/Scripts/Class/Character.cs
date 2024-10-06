@@ -11,7 +11,10 @@ public class Character : Object
     {
         hp = maxHp;
     }
-    virtual protected void Init() { }
+    protected override void Init()
+    { 
+        //void
+    }
 
     //getset
     public void SetDamnagedHp(float damageValue)
