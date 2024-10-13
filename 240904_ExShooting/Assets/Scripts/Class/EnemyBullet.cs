@@ -45,7 +45,7 @@ public class EnemyBullet : Bullet
             if(concent.GetIsPowerUp())
             {
                 concent.SetPower(powerUpValue);
-                Debug.Log("power up : " + concent.GetPower().ToString());
+                Debug.Log("power up : " + concent.GetPower().ToString() + "by " + this.gameObject.name);
             }
             else
             {
