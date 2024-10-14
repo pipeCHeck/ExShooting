@@ -31,7 +31,6 @@ public class Player : Attacker
         SetTag("Player");
         SetAttackDelay(0.05f);
         SetBulletSpeed(50f);
-        Debug.Log(isReadyAttack + "에라이");
     }
 
 
@@ -75,7 +74,7 @@ public class Player : Attacker
     void ShootBullet()
     {
         // GetIsReadyAttack함수로 공격 딜레이조건을 확인 후 발동이 된다
-        if (Input.GetKey(KeyCode.Z) && GetIsReadyAttack())
+        if (Input.GetKey(KeyCode.Z) && attackManage.GetIsReadyAttack())
         {
             AttackReady(); //항상 공격할 때 이 함수를 사용해야 함.
             for (int i = 0; i < shootPosition.Length; i++)
@@ -106,7 +105,5 @@ public class Player : Attacker
                 Destroy(enemyBullets[i]);
             }
         }
-    }
-
-    
+    }   
 }

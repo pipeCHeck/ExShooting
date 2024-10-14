@@ -521,8 +521,6 @@ MonoBehaviour:
   InputShootPosition:
   - {x: -0.3, y: 0, z: 0}
   - {x: 0.3, y: 0, z: 0}
-  isReadyAttack: 0
-  isReadySkill: 0
 --- !u!114 &550431182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -696,8 +694,6 @@ MonoBehaviour:
   bullet: {fileID: 1102354148527234860, guid: 29d4513cbc2334e4b9a27a774033261d, type: 3}
   InputShootPosition:
   - {x: 0, y: -0.5, z: 0}
-  isReadyAttack: 0
-  isReadySkill: 0
 --- !u!1 &2037213919
 GameObject:
   m_ObjectHideFlags: 0

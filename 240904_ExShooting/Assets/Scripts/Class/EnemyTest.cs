@@ -37,7 +37,7 @@ public class EnemyTest : Attacker // 발표를 위한 보여주기식 클래스. 삭제할 예정�
 
     void Attack()
     {
-        if(GetIsReadyAttack())
+        if(attackManage.GetIsReadyAttack())
         {
             AttackReady();
             for (int i = 0; i < shootPosition.Length; i++)

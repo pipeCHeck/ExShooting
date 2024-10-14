@@ -5,6 +5,16 @@ using UnityEngine;
 
 public class AttackManage : MonoBehaviour
 {
+    //총알 공격, 스킬, 폭탄 주기
+    bool isReadyAttack, isReadySkill, isReadyExplosion; //반드시 init 함수 내용에 true로 할 것
+
+
+    public void Init()
+    {
+        isReadyAttack = true;
+        isReadySkill = true;
+        isReadyExplosion = true;
+    }
 
     // 일반적인 슈팅으로 방향 초기값을 그대로 나아가는 특징이 있음. 해당 함수가 요구하는 파라미터들이 추후 변경될 수 있음.
     public void ShootStraightBullet(GameObject bullet, GameObject OrderCharacter, Vector3 shootPosition, float rotationZ, float bulletSpeed) 
@@ -51,4 +61,41 @@ public class AttackManage : MonoBehaviour
         }
     }
 
+    public void TransBoolData(ref bool data)
+    {
+        if (data)
+        {
+            data = false;
+        }
+        else
+        {
+            data = true;
+        }
+    }
+
+    public bool GetIsReadyAttack()
+    {
+        return isReadyAttack;
+    }
+
+    //해당 코드로 다시 수정했는데, bool 타입의 상태 부분에서 추후에 많이 안생길 것 같다는 판단 하에 이러한 과정을 삽입하였음. 좋고 효율적인 아이디어가 있을 경우 반드시 언급해줄 것
+    public void SetToggleState(string stateName, bool state)
+    {
+        switch (stateName)
+        {
+            //해당 알고리즘이 그나마 낫다고 판단하다면 이러한 문자 형태는 어떠한 지, 혹은 이러한 경우에 어떤 식으로 이름을 적는 지 언급해줄 것
+            case "attack":
+                isReadyAttack = state;
+                break;
+            case "skill":
+                isReadyAttack = state; //수정 필요
+                break;
+            case "removeBullet":
+                isReadyExplosion = state;
+                break;
+            default:
+                Debug.Log("문자열을 잘못 입력했습니다.");
+                break;
+        }
+    }
 }
