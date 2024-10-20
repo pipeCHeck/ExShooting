@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Build;
 using UnityEngine;
 
 public class Character : Object
 {
+    protected GameManager gameManager;
     float hp, maxHp;
     public int damage;
 
@@ -17,13 +19,15 @@ public class Character : Object
     }
 
     //getset
-    public void SetDamnagedHp(float damageValue)
+    public virtual void SetDamagedHp(float damageValue)
     {
         hp -= damageValue;
-        if(GetHp() <= 0)
-        {
-            Destroy(this.gameObject);
-        }
+        
+    }
+
+    protected virtual void DeathEvent()
+    {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // 추후 회복하거나, 강제로 체력이 줄어들 수 있으므로 일방적인 데미지와 다른 개념으로 함수 생성
@@ -57,5 +61,6 @@ public class Character : Object
     {
         damage = value;
     }
+
 
 }

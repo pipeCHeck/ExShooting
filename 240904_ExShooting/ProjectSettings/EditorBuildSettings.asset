@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameScene.unity
     guid: 82c8cd7f890d337418df7f2e0756403d
+  - enabled: 1
+    path: Assets/Scenes/TestPsjScene.unity
+    guid: 7ba32d0931a22fd4ab018f9e72d3fc47
+  - enabled: 1
+    path: Assets/Scenes/ScoreDataScene.unity
+    guid: 3b304d5081b15d24e886245891ad1bf7
   m_configObjects: {}

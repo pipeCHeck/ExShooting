@@ -94,6 +94,8 @@ GameObject:
   m_Component:
   - component: {fileID: 628052690996784465}
   - component: {fileID: 15754586696697626}
+  - component: {fileID: 6513403802136054829}
+  - component: {fileID: 716606309697183608}
   m_Layer: 0
   m_Name: DemoEnemy_ 01
   m_TagString: Enemy
@@ -130,5 +132,55 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
+  attack: {fileID: 0}
+--- !u!58 &6513403802136054829
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5210778510167069838}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
+--- !u!114 &716606309697183608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5210778510167069838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdb46849e5ca5a14e8d5dfe0b4c31f42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   bullet: {fileID: 6652234618955289917, guid: cda7c0b0c9ec51e41a7052ad1b007eab, type: 3}
-  InputShootPosition: []
+  attackManage: {fileID: 0}
+  InputShootPosition:
+  - {x: 0, y: -1, z: 0}
