@@ -14,8 +14,9 @@ public class EnemyTest : EnemyAttack // 발표를 위한 보여주기식 클래스. 삭제할 예
     // Update is called once per frame
     void Update()
     {
-        Attack();
-        Move();
+        Attack(); // 총알을 발사하는 공격타입이므로.. 
+        Move(); // 단순 이동
+        EnemyAutoRemove(); // 일정 거리로(현재는 아래) 이동하여 화면을 벗어날 시 자동 삭제 
     }
 
     protected override void Init()

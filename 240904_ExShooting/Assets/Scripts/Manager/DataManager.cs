@@ -22,7 +22,6 @@ public class DataManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-
     }
 
     public void SetPlayData(string initialName, int scoreData)
