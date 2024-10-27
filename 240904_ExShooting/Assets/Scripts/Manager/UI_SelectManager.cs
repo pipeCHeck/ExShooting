@@ -151,6 +151,5 @@ public class UI_SelectManager : MonoBehaviour
     void ActionButton()
     {
         LoadedButtons[GetFocusingButtonIndex()].onClick.Invoke(); //이렇게 해도 문제 없음. 각 button들의 onClick부분을 삽입해주면 효율적으로 처리할 수 있음
-
     }
 }
