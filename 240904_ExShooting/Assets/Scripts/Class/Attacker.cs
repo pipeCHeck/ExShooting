@@ -15,6 +15,9 @@ public class Attacker : MonoBehaviour
     Vector3[] InputShootPosition; // 각 공격하는 클래스들의 발사위치가 존재함. 하나일 수도 있고 여러곳일 수 있음
     Vector3[] shootPosition; // 오브젝트의 로컬 포지션을 기준으로 설정한 발사 위치 정의.
 
+    [SerializeField]
+    int shootCount; // 한 번의 공격에 사용할 Bullet 갯수 (김진우)
+
     float attackDelay; // 공격주기. 플레이어의 공격속도가 될 수 있고, 공격하는 몬스터의 공격주기로 처리할 수 있음
     float bulletSpeed; // 발사하는 주체가 요구하는 총알 속도값
 
@@ -130,6 +133,15 @@ public class Attacker : MonoBehaviour
         return shootPosition[arrayIndex];
     }
 
+    public void SetShootCount(int shootCount)
+    {
+        this.shootCount = shootCount;
+    }
+
+    public int GetShootCount()
+    {
+        return shootCount;
+    }
 
     public void SetShootVector(int index, Vector3 value) // 형식적인 함수이나 혹시 쓸 수도 있으니 보류
     {

@@ -90,13 +90,39 @@ public class Player : Character
         if (Input.GetKey(KeyCode.Z) && attack.GetToggleState("attack"))
         {
             attack.AttackReady(); //항상 공격할 때 이 함수를 사용해야 함.
-            for (int i = 0; i < attack.GetShootPositions().Length; i++)
+
+            //int bulletCount = attack.GetShootPositions().Length;
+            int bulletCount = attack.GetShootCount();
+
+            for (int i = 0; i < bulletCount; i++)
             {
                 //각 오브젝트(캐릭터 클래스들)들이 원하는 총의 속도값을 소지한 후, 총알을 발사할 때 해당 값을 전송하여 총알의 속도를 정함.
-                attack.attackManage.ShootStraightBullet(attack.bullet, this.gameObject, attack.GetShootPosition(i), 0, attack.GetBulletSpeed());
+                //attack.attackManage.ShootStraightBullet(attack.bullet, this.gameObject, attack.GetShootPosition(i), 0, attack.GetBulletSpeed());
+                attack.attackManage.ShootStraightBullet(attack.bullet, this.gameObject, transform.position + new Vector3(0.4f * (i - (bulletCount / 2)) + (bulletCount % 2 - 1) * -0.2f, 0.3f, 0), 0, attack.GetBulletSpeed()); // bullet 위치값 무시하고 bullet 수에 따라 위치 고정함
             }
         }
     }
+
+    /*
+    void ShootBullet()
+    {
+        // GetIsReadyAttack함수로 공격 딜레이조건을 확인 후 발동이 된다
+        if (Input.GetKey(KeyCode.Z) && attack.GetToggleState("attack"))
+        {
+            attack.AttackReady(); //항상 공격할 때 이 함수를 사용해야 함.
+
+            int bulletCount = attack.GetShootPositions().Length;
+
+            for (int i = 0; i < attack.GetShootPositions().Length; i++)
+            {
+                //각 오브젝트(캐릭터 클래스들)들이 원하는 총의 속도값을 소지한 후, 총알을 발사할 때 해당 값을 전송하여 총알의 속도를 정함.
+                //attack.attackManage.ShootStraightBullet(attack.bullet, this.gameObject, attack.GetShootPosition(i), 0, attack.GetBulletSpeed());
+                attack.attackManage.ShootStraightBullet(attack.bullet, this.gameObject, new Vector3(transform.position.x + 0.3f * (i - (i / 2)), 0.3f, 0), 0, attack.GetBulletSpeed());
+            }
+        }
+    }
+    */
+
 
     //폭탄 
     void ExplosionFild()
