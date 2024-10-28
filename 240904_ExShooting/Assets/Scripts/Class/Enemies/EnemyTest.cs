@@ -39,13 +39,20 @@ public class EnemyTest : EnemyAttack // 발표를 위한 보여주기식 클래스. 삭제할 예
 
     void Attack()
     {
-        if(attack.GetToggleState("attack"))
+        if(attack != null)
         {
-            attack.AttackReady();
-            for (int i = 0; i < attack.GetShootPositions().Length; i++)
+            if (attack.GetToggleState("attack"))
             {
-                attack.attackManage.ShootTargetBullet(attack.bullet, this.gameObject, "Player", attack.GetShootPosition(i), attack.GetBulletSpeed());
+                attack.AttackReady();
+                for (int i = 0; i < attack.GetShootPositions().Length; i++)
+                {
+                    attack.attackManage.ShootTargetBullet(attack.bullet, this.gameObject, "Player", attack.GetShootPosition(i), attack.GetBulletSpeed());
+                }
             }
+        }
+        else
+        {
+            Debug.Log(gameObject.name.ToString() + " is not have attackManage script");
         }
     }
 

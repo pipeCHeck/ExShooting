@@ -35,8 +35,13 @@ public class Bullet : Object
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        HitCharacterByCollision(ref collision);
+    }
+
+    protected void HitCharacterByCollision(ref Collider2D collision)
+    {
         //적이 플레이어 총알충돌
-        if(collision.transform.tag == "Enemy" && this.GetTag() == "PlayerBullet")
+        if (collision.transform.tag == "Enemy" && this.GetTag() == "PlayerBullet")
         {
             collision.gameObject.GetComponent<Enemy>().SetDamagedHp(damage);
             Destroy(this.gameObject);

@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class Player : Character
 {
+    [SerializeField]
+    float moveMaxX, moveMaxY; 
     Attacker attack; //attack script must input in inspecter directly
     PlayerConcentrater concentrate;
 
@@ -35,6 +37,8 @@ public class Player : Character
         attack.SetBulletSpeed(50f);
     }
 
+    
+
     public override void SetDamagedHp(float damageValue)
     {
         base.SetDamagedHp(damageValue);
@@ -55,21 +59,21 @@ public class Player : Character
         concentrate.ConcentrateControl(this.gameObject);
     }
 
-    void PlayerMove()
+    void PlayerMove() //이동 뿐만 아니라 최대 이동 범위 설정
     {
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow) && transform.position.x > -moveMaxX)
         {
             ObjectMove(Vector3.left, GetMoveSpeed());
         }
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow) && transform.position.x < moveMaxX)
         {
             ObjectMove(Vector3.right, GetMoveSpeed());
         }
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.UpArrow) && transform.position.y < moveMaxY)
         {
             ObjectMove(Vector3.up, GetMoveSpeed());
         }
-        if (Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.DownArrow) && transform.position.y > -moveMaxY)
         {
             ObjectMove(Vector3.down, GetMoveSpeed());
         }
@@ -79,12 +83,12 @@ public class Player : Character
     //일반적인 슈팅 공격과 영창 시스템의 공격 키들 모음
     void PlayerAttack() 
     {
-        ShootBullet();
+        Attack();
         ExplosionFild();
 
     }
 
-    void ShootBullet()
+    void Attack()
     {
         // GetIsReadyAttack함수로 공격 딜레이조건을 확인 후 발동이 된다
         if (Input.GetKey(KeyCode.Z) && attack.GetToggleState("attack"))
@@ -101,10 +105,17 @@ public class Player : Character
                 attack.attackManage.ShootStraightBullet(attack.bullet, this.gameObject, transform.position + new Vector3(0.4f * (i - (bulletCount / 2)) + (bulletCount % 2 - 1) * -0.2f, 0.3f, 0), 0, attack.GetBulletSpeed()); // bullet 위치값 무시하고 bullet 수에 따라 위치 고정함
             }
         }
+
+        if(Input.GetKey(KeyCode.X) && attack.GetToggleState("attack"))
+        {
+            attack.AttackReady();
+            Vector3 instanceShootPosition = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+            attack.attackManage.ShootMisiile(attack.missile, this.gameObject, instanceShootPosition, attack.GetBulletSpeed());
+        }
     }
 
     /*
-    void ShootBullet()
+    void Attack()
     {
         // GetIsReadyAttack함수로 공격 딜레이조건을 확인 후 발동이 된다
         if (Input.GetKey(KeyCode.Z) && attack.GetToggleState("attack"))
@@ -124,10 +135,10 @@ public class Player : Character
     */
 
 
-    //폭탄 
+    //폭탄. 현재 C 키를 통해 발동할 수 있음
     void ExplosionFild()
     {
-        if(Input.GetKeyDown(KeyCode.X))
+        if(Input.GetKeyDown(KeyCode.C))
         {
             GameObject[] enemyBullets;
             enemyBullets = GameObject.FindGameObjectsWithTag("EnemyBullet");

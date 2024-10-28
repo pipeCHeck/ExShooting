@@ -8,7 +8,7 @@ using Vector3 = UnityEngine.Vector3;
 public class Attacker : MonoBehaviour
 {
 
-    public GameObject bullet;
+    public GameObject bullet, missile;
     public AttackManage attackManage;
 
     [SerializeField]
@@ -91,7 +91,7 @@ public class Attacker : MonoBehaviour
                 isReadyAttack = state;
                 break;
             case "skill":
-                isReadyAttack = state; //수정 필요
+                isReadyAttack = state;
                 break;
             case "removeBullet":
                 isReadyExplosion = state;

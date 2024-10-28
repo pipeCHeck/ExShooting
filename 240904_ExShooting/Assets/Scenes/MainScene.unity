@@ -412,7 +412,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 665614685}
   m_OnClick:
     m_PersistentCalls:
@@ -718,11 +718,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 879615075}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d48b92f31a4e4d4f890f18a5e8d18fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneState: 0
   LoadedButtons: []
   buttonDummies:
   - {fileID: 1884209127}
