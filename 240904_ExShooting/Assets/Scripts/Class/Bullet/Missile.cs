@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Missile : Bullet
 {
     GameObject targetObject;
     Vector3[] targetObjectsVec;
     Vector3 tununingDir;
-    float rotationSpeed = 50f;
+    float rotationSpeed = 1f; //미사일이 회전할 수 있는 최대 각도. 미사일일 특정 오브젝트를 추격하는 시간이 길어질 수록 값이 오름
 
     // Start is called before the first frame update
     void Start()
@@ -54,22 +55,41 @@ public class Missile : Bullet
         if (targetObject != null)
         {
             /*
+            //다른 형태의 유도탄1. 
             Vector2 direction2D = (Vector2)(targetObject.transform.position - transform.position).normalized;
             transform.up = Vector2.Lerp(transform.up, direction2D, 0.1f);
             */
 
-            Vector2 direction = (targetObject.transform.position - transform.position).normalized;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg; // 각도 구하기
-            Quaternion rotation = Quaternion.Euler(new Vector3(0, 0, angle)); // Z축 회전만 적용
 
 
-            Quaternion rotateValue = Quaternion.RotateTowards(transform.rotation, rotation, rotationSpeed);
+            // 목표 방향 벡터 계산
+            Vector3 directionToTarget = (targetObject.transform.position - transform.position).normalized;
 
-            transform.rotation = rotateValue;
+            // 방향 벡터를 계산할 때 2D형식은 up을 기준으로 함
+            Vector3 currentForward = transform.up; 
+
+            
+            // 회전 각도 계산
+            float angle = Vector3.SignedAngle(currentForward, directionToTarget, Vector3.forward);
+
+            // 회전 적용
+            if (angle != 0)
+            {
+                Quaternion rotation = Quaternion.Euler(0, 0, angle * GetRotationSpeed() * Time.deltaTime);
+                transform.rotation = rotation * transform.rotation;
+                // 회전각을 더하는 이유는 일정한 각도로 빠르게 설정하면 유도탄 답지 않은 연출이 되며, 낮게 주면 오브젝트를 맞추지 못하고 공전하는듯한 현상을 보인다.
+                // 이로 인해 한번 타깃을 정한 오브젝트의 추적이 길어질 수록 회전 한계값을 늘려 결국 적중하게 만듦
+                SetRotationSpeed(GetRotationSpeed() + 0.15f);
+            }
+
+            Debug.Log(GetMoveSpeed());
         }
         else //targetResearching
         {
             TargetSearching();
+            //위 회전각을 더하는 원리에 의해서 타깃이 사라져 재탐지하거나 최초 탐지를 할 때 초기화를 해야한다 
+            SetRotationSpeed(1f);
+
         }
     }
 
@@ -77,13 +97,8 @@ public class Missile : Bullet
     {
         base.Init();
 
-        // 반반의 확률로 회전하는 각도 자체를 변형함
-        if (Random.Range(0, 2) == 1)
-        {
-            rotationSpeed *= -1;
-        }
         //미사일은 조금 느리게 움직이기
-        SetMoveSpeed(GetMoveSpeed() - 7f);
+        SetMoveSpeed(15f);
         //생성되자마자 타겟 설정
         TargetSearching();
     }
