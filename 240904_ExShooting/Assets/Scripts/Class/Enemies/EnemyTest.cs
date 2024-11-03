@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyTest : EnemyAttack // 발표를 위한 보여주기식 클래스. 삭제할 예정이며 아래 코드들을 기반으로 기획서와 함께 분석하여 Enemy클래스 설계에 대해 이바지할 예정
 {
     GameObject player;
+
     // Start is called before the first frame update
     void Start()
     {   

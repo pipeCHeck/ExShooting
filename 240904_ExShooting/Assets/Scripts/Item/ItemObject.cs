@@ -16,6 +16,16 @@ public class ItemObject : MonoBehaviour
             playerItemInteraction.PickUpItem(itemData);
             Destroy(gameObject);
         }
+    }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        // 충돌 오브젝트 태그 확인
+        switch (other.tag)
+        {
+            case "Player": // 플레이어인 경우
+                ItemDataTransfer(other.gameObject); // 아이템 데이터 전송
+                break;
+        }
     }
 }

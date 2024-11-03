@@ -29,6 +29,44 @@ public class PlayerBuff : MonoBehaviour
         MoveSpeedBuff();
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        switch (collision.tag)
+        {
+            case "Item":
+                Debug.Log("아이템 획득!");
+                switch (collision.gameObject.GetComponent<ItemMovement>().GetTypeItem())
+                {
+                    case "MagicBeamExp":
+                        Debug.Log("마력 광선의 강화 룬 발견!");
+                        break;
+                    case "EnergyBulletExp":
+                        Debug.Log("에너지 탄의 강화 룬 발견!");
+                        break;
+                    case "HomingOrbExp":
+                        Debug.Log("추적 오브의 강화 룬 발견!");
+                        break;
+                    case "AttackPowerUp":
+                        Debug.Log("7초 간 공격력 증가");
+                        break;
+                    case "Invincibility":
+                        Debug.Log("7초 간 무적 적용");
+                        break;
+                    case "healthPack":
+                        Debug.Log("체력 일부 회복");
+                        break;
+                    default:
+                        Debug.Log("- 예외 처리 -");
+                        break;
+                }
+                Destroy(collision.gameObject);
+                break;
+            case "ScoreItem":
+                Destroy(collision.gameObject);
+                break;
+        }
+    }
+
     private void ShotCountBuff()
     {
         if (shotCountBuffCooldown > 0)

@@ -22,7 +22,7 @@ public class Bullet : Object
     protected override void Init()
     {
         base.Init();
-        Destroy(gameObject, 5f);
+        Destroy(gameObject, 2f);
 
     }
 

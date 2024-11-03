@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/TestPsjScene.unity
+- path: Assets/Scenes/TestSceneKJW.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

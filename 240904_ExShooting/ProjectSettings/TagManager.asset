@@ -12,6 +12,9 @@ TagManager:
   - Enemy
   - PlayerBullet
   - CardManager
+  - Item
+  - ScoreItem
+  - ItemDropManager
   layers:
   - Default
   - TransparentFX

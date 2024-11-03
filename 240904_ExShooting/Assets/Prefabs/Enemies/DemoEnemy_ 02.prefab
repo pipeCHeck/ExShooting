@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2015887036228881295}
   - component: {fileID: 1395843133685085116}
   - component: {fileID: 2952036824172272542}
+  - component: {fileID: -3281411393497472440}
   m_Layer: 0
   m_Name: DemoEnemy_ 02
   m_TagString: Enemy
@@ -48,6 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
+  score: 0
   attack: {fileID: 0}
 --- !u!58 &1395843133685085116
 CircleCollider2D:
@@ -97,9 +99,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 6652234618955289917, guid: cda7c0b0c9ec51e41a7052ad1b007eab, type: 3}
+  missile: {fileID: 0}
   attackManage: {fileID: 0}
   InputShootPosition:
   - {x: 0, y: -1, z: 0}
+  shootCount: 0
+--- !u!114 &-3281411393497472440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2255613555348565249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 846e1bd0bc8076b48bfb77a74a1fee63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  expAmount: 20
 --- !u!1 &3830676743238049735
 GameObject:
   m_ObjectHideFlags: 0
