@@ -17,9 +17,9 @@ public class Missile : Bullet
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
-        ObjectMove(Vector3.up, GetMoveSpeed());
+        base.Update();
         TunningObject();
     }
 
@@ -27,22 +27,22 @@ public class Missile : Bullet
     void TargetSearching()
     {
         //가까운 오브젝트를 알아내기 위한 속성 초기값을 크게 둬야 단거리로 갱신하기 쉽다
-        float targetObjectDistance = 100f;
+        float targetObjectDistance = 200f;
 
         //존재하는 적 오브젝트 탐지
         GameObject[] instanceObjects = GameObject.FindGameObjectsWithTag("Enemy");
         //타겟들의 데이터 크기 조사
         targetObjectsVec = new Vector3[instanceObjects.Length];
-
+        float targetDistance = 0;
         //데이터 위치값 조사. 가까운 오브젝트를 찾아야 하기 때문
         for (int i = 0; i < targetObjectsVec.Length; i++)
         {
-            targetObjectsVec[i] = instanceObjects[i].GetComponent<Enemy>().transform.position;
-
-            //거리 비교 후 오브젝트 및 거리 갱신. 또한 플레이어 전방의 오브젝트를 탐지하는 것으로 정의
-            if (targetObjectDistance > targetObjectsVec[i].magnitude)
+            targetObjectsVec[i] = instanceObjects[i].GetComponent<Character>().transform.position;
+            targetDistance = (targetObjectsVec[i] - this.transform.position).magnitude;
+            //총알과 적의 거리 비교 후 오브젝트 및 거리 갱신. 또한 플레이어 전방의 오브젝트를 탐지하는 것으로 정의
+            if (targetObjectDistance > targetDistance)
             {
-                targetObjectDistance = targetObjectsVec[i].magnitude;
+                targetObjectDistance = targetDistance;
                 targetObject = instanceObjects[i];
             }
         }
@@ -79,7 +79,7 @@ public class Missile : Bullet
                 transform.rotation = rotation * transform.rotation;
                 // 회전각을 더하는 이유는 일정한 각도로 빠르게 설정하면 유도탄 답지 않은 연출이 되며, 낮게 주면 오브젝트를 맞추지 못하고 공전하는듯한 현상을 보인다.
                 // 이로 인해 한번 타깃을 정한 오브젝트의 추적이 길어질 수록 회전 한계값을 늘려 결국 적중하게 만듦
-                SetRotationSpeed(GetRotationSpeed() + 0.15f);
+                SetRotationSpeed(GetRotationSpeed() + 1.5f);
             }
 
             Debug.Log(GetMoveSpeed());
@@ -88,7 +88,7 @@ public class Missile : Bullet
         {
             TargetSearching();
             //위 회전각을 더하는 원리에 의해서 타깃이 사라져 재탐지하거나 최초 탐지를 할 때 초기화를 해야한다 
-            SetRotationSpeed(1f);
+            SetRotationSpeed(0.5f);
 
         }
     }

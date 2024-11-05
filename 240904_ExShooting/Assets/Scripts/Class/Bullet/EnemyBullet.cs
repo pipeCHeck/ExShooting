@@ -22,8 +22,9 @@ public class EnemyBullet : Bullet
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         ObjectMove(Vector3.up, GetMoveSpeed()); // 해당 함수를 상속받았으므로 반드시 사용해야함
         CheckGraze(); //테스트용으로 위치가 추후 변경될 수 있음
     }
