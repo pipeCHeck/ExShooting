@@ -29,7 +29,8 @@ public class Bullet : Object
         SetDestroyTime(10f);
         AutoDestroyByTime();
     }
-    
+
+
     void CheckAciveRange()
     {
         if(Mathf.Abs(transform.position.x) > moveMaxX || Mathf.Abs(transform.position.y) > moveMaxY)

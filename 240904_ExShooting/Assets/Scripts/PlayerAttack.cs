@@ -7,10 +7,23 @@ public enum WeaponType { MagicBeam, EnergyBullet, HomingOrb }
 public class PlayerAttack : MonoBehaviour
 {
     public WeaponType currentWeapon = WeaponType.EnergyBullet;
-
+    public List<PlayerAttackData> attackData = new List<PlayerAttackData>();
+    AttackManage attack;
+    float attackDelay;
     private int laserLevel = 1;
     private int bulletLevel = 1;
     private int homingMissileLevel = 1;
+
+    public bool isTest; //박성준 테스트의 목적으로 추가
+
+    public bool isReadyAttack;
+    public bool isReadySkill;
+    public bool isReadyExplosion;
+
+    void Start()
+    {
+        Init();
+    }
 
     void Update()
     {
@@ -23,8 +36,20 @@ public class PlayerAttack : MonoBehaviour
         // 무기 레벨업 (예: L 키로 레벨업)
         if (Input.GetKeyDown(KeyCode.L))
         {
-            LevelUpCurrentWeapon();
+            if (isTest) //박성준 이하동일. 현재는 테스트 예외처리를 통해 강화가 적용됨
+            {
+                TestLevelUpWeapon();
+            }
+            else
+            {
+                LevelUpCurrentWeapon();
+            }
         }
+    }
+
+    void Init() //박성준
+    {
+        attack = gameObject.AddComponent<AttackManage>();
     }
 
     // 무기 전환 메서드 (입력: LeftShift)
@@ -50,7 +75,7 @@ public class PlayerAttack : MonoBehaviour
     // 무기 발사 메서드 (입력: Z)
     void ShootWeapon()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKey(KeyCode.Z))
         {
             switch (currentWeapon)
             {
@@ -86,6 +111,15 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
+    //박성준 테스트 목적으로 한번에 모든 무기들을 강화하는 효과
+    void TestLevelUpWeapon()
+    {
+        laserLevel++;
+        bulletLevel++;
+        homingMissileLevel++;
+        Debug.Log("모든 무기 강화! 현재 테스트모드.");
+    }
+
     void FireLaser()
     {
         Debug.Log("마력 광선 발사 / 레벨: " + laserLevel);
@@ -94,6 +128,7 @@ public class PlayerAttack : MonoBehaviour
 
     void FireBullet()
     {
+        
         Debug.Log("에너지 탄 발사 / 레벨: " + bulletLevel);
         // 레벨에 따른 탄환 발사 방식
     }
@@ -102,5 +137,32 @@ public class PlayerAttack : MonoBehaviour
     {
         Debug.Log("추적 오브 발사 / 레벨: " + homingMissileLevel);
         // 레벨에 따른 유도 미사일 발사 방식
+    }
+
+    IEnumerator ActionDelay(string actionType)
+    {
+        SetToggleState(actionType, false);
+        yield return new WaitForSeconds(attackDelay);
+        SetToggleState(actionType, true);
+
+    }
+
+    public void SetToggleState(string stateName, bool state)
+    {
+        switch (stateName)
+        {
+            case "attack":
+                isReadyAttack = state;
+                break;
+            case "skill":
+                isReadyAttack = state;
+                break;
+            case "removeBullet":
+                isReadyExplosion = state;
+                break;
+            default:
+                Debug.Log("문자열을 잘못 입력했습니다.");
+                break;
+        }
     }
 }

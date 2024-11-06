@@ -7,8 +7,8 @@ using UnityEngine;
 public class Player : Character
 {
     [SerializeField]
-    float moveMaxX, moveMaxY; 
-    Attacker attack; //attack script must input in inspecter directly
+    float moveMaxX, moveMaxY;
+    //Attacker attack; //attack script must input in inspecter directly
     PlayerConcentrater concentrate;
 
     // Start is called before the first frame update
@@ -26,15 +26,15 @@ public class Player : Character
     protected override void Init()
     {
         base.Init();
-        attack = gameObject.GetComponent<Attacker>();
+        //attack = gameObject.GetComponent<Attacker>();
         concentrate = gameObject.AddComponent<PlayerConcentrater>(); // 스크립트 추가
         concentrate.ConcentInit();
         SetMaxHp(3); //노멀 난이도 기준으로 초기 설정
         SetTransHp(GetMaxHp());
         SetMoveSpeed(20f); //기본값43 (테스트 중 불편함으로 잠시 줄어놓았음)
         SetTag("Player");
-        attack.SetAttackDelay(0.05f);
-        attack.SetBulletSpeed(50f);
+        //attack.SetAttackDelay(0.05f);
+        //attack.SetBulletSpeed(50f);
     }
 
     
@@ -90,6 +90,7 @@ public class Player : Character
 
     void Attack()
     {
+        /*
         // GetIsReadyAttack함수로 공격 딜레이조건을 확인 후 발동이 된다
         if (Input.GetKey(KeyCode.Z) && attack.GetToggleState("attack"))
         {
@@ -112,6 +113,9 @@ public class Player : Character
             Vector3 instanceShootPosition = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
             attack.attackManage.ShootMisiile(attack.missile, this.gameObject, instanceShootPosition, attack.GetBulletSpeed());
         }
+        */
+
+
     }
 
     /*
