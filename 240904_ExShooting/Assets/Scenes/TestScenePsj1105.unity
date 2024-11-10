@@ -1416,7 +1416,7 @@ Transform:
   m_GameObject: {fileID: 498647552}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2429,17 +2429,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentWeapon: 1
+  shootVec: {x: 0, y: 0.1, z: 0}
+  currentWeaponObject: {fileID: 0}
+  laser: {fileID: 6435168655884182585, guid: 1d77e05d3aa60df4a8e163398a1681e7, type: 3}
   attackData:
-  - weaponName: Laser
-    shootVec:
-    - {x: 0, y: 0, z: 0}
-    shootVecCount: 0100000001000000010000000100000001000000
+  - weaponName: MagicBeam
+    weapon: {fileID: 0}
+    shootVecCount: 1
     attackDelay:
-    - 1
-    - 1
-    - 0.5
-    - 0.5
-    - 0.25
+    - 0.3
+    - 0.3
+    - 0.15
+    - 0.15
+    - 0.15
     attackDamage:
     - 10
     - 12
@@ -2453,18 +2455,14 @@ MonoBehaviour:
     - 0
     - 0
   - weaponName: EnergyBullet
-    shootVec:
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    shootVecCount: 0200000002000000020000000400000004000000
+    weapon: {fileID: 6652234618955289917, guid: cda7c0b0c9ec51e41a7052ad1b007eab, type: 3}
+    shootVecCount: 2
     attackDelay:
-    - 0.5
-    - 0.5
-    - 0.3
-    - 0.3
-    - 0.3
+    - 0.1
+    - 0.1
+    - 0.05
+    - 0.05
+    - 0.05
     attackDamage:
     - 10
     - 12
@@ -2477,17 +2475,15 @@ MonoBehaviour:
     - 50
     - 50
     - 50
-  - weaponName: HomingMissile
-    shootVec:
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    shootVecCount: 0100000001000000020000000200000002000000
+  - weaponName: HomingOrb
+    weapon: {fileID: 6354848910048094213, guid: 8e5636816f6a7f14c8b8d8394c41ef64, type: 3}
+    shootVecCount: 1
     attackDelay:
-    - 0.7
-    - 0.7
-    - 0.5
-    - 0.5
-    - 0.5
+    - 0.2
+    - 0.2
+    - 0.1
+    - 0.1
+    - 0.1
     attackDamage:
     - 8
     - 10
@@ -2501,6 +2497,9 @@ MonoBehaviour:
     - 40
     - 40
   isTest: 1
+  isReadyAttack: 0
+  isReadySkill: 0
+  isReadyExplosion: 0
 --- !u!1 &1322233525
 GameObject:
   m_ObjectHideFlags: 0

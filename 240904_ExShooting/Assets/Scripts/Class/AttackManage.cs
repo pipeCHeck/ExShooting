@@ -11,11 +11,9 @@ public class AttackManage : MonoBehaviour
     // 일반적인 슈팅으로 방향 초기값을 그대로 나아가는 특징이 있음. 해당 함수가 요구하는 파라미터들이 추후 변경될 수 있음.
     public void ShootStraightBullet(GameObject bullet, GameObject orderCharacter, Vector3 shootPosition, float rotationZ, float bulletSpeed) 
     {
-        Bullet instanceBullet = Instantiate(bullet, shootPosition, transform.rotation).GetComponent<Bullet>();
-        instanceBullet.SetMoveSpeed(bulletSpeed);
+        Weapon instanceBullet = Instantiate(bullet, shootPosition, transform.rotation).GetComponent<Weapon>();
         instanceBullet.SetRotationZ(rotationZ);
-        instanceBullet.SetTag(InitTag(orderCharacter));
-        instanceBullet.SetDamage(orderCharacter.GetComponent<Character>().GetDamage());
+        instanceBullet.SetWeaponData(bulletSpeed, InitTag(orderCharacter), orderCharacter.GetComponent<Character>().GetDamage());
     }
 
     //해당 대상의 위치를 받아내어 발사하는 방식
@@ -24,13 +22,11 @@ public class AttackManage : MonoBehaviour
         GameObject target = GameObject.FindWithTag(targetCharacter);
         if(target != null)
         {
-            Bullet instanceBullet = Instantiate(bullet, shootPosition, transform.rotation).GetComponent<Bullet>();
+            Weapon instanceBullet = Instantiate(bullet, shootPosition, transform.rotation).GetComponent<Weapon>();
             //수업때 했던 해당 방향으로 타겟하기
             float angle = Mathf.Atan2(target.transform.position.y - orderCharacter.transform.position.y, target.transform.position.x - orderCharacter.transform.position.x) * Mathf.Rad2Deg; 
-            instanceBullet.SetMoveSpeed(bulletSpeed);
             instanceBullet.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
-            instanceBullet.SetTag(InitTag(orderCharacter));
-            instanceBullet.SetDamage(orderCharacter.GetComponent<Character>().GetDamage());
+            instanceBullet.SetWeaponData(bulletSpeed, InitTag(orderCharacter), orderCharacter.GetComponent<Character>().GetDamage());
         }
         else
         {
@@ -48,14 +44,12 @@ public class AttackManage : MonoBehaviour
 
     public void ShootMisiile(GameObject missile, GameObject orderCharacter, Vector3 shootVec, float bulletSpeed)
     {
-        Bullet instanceBullet = Instantiate(missile, shootVec, transform.rotation).GetComponent<Bullet>();
-        instanceBullet.SetMoveSpeed(bulletSpeed);
-        instanceBullet.SetTag(InitTag(orderCharacter));
-        instanceBullet.SetDamage(orderCharacter.GetComponent<Character>().GetDamage());
+        Weapon instanceBullet = Instantiate(missile, shootVec, transform.rotation).GetComponent<Weapon>();
+        instanceBullet.SetWeaponData(bulletSpeed, InitTag(orderCharacter), orderCharacter.GetComponent<Character>().GetDamage());
     }
 
 
-     // 만약 스킬성으로 제한된 미사일을 발사한다면 이러한 형태일 것
+    // 만약 스킬성으로 제한된 미사일을 발사한다면 이러한 형태일 것
     IEnumerator MissileShooting(GameObject missile, GameObject orderCharacter, Vector3 shootVec, int shootCount, float bulletSpeed, float shootDelay)
     {
         for(int i = 0; i < shootCount; i++)
@@ -93,6 +87,8 @@ public class AttackManage : MonoBehaviour
             data = true;
         }
     }
+
+    
 
 
 }

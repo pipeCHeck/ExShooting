@@ -36,6 +36,7 @@ public class EnemyTest : EnemyAttack // 발표를 위한 보여주기식 클래스. 삭제할 예
         SetTag("Enemy"); // Enemy의 경우 해당 코드는 추후 생성스크립트 제작할 때 생성과 동시에 태그설정할 예정. 그러므로 각 Enemy스크립트에 이 코드는 넣지 않을 예정
         attack.SetAttackDelay(2f);
         attack.SetBulletSpeed(10f);
+        SetDamage(2);
     }
 
     void Attack()

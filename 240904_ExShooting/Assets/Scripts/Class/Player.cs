@@ -56,7 +56,7 @@ public class Player : Character
     {
         PlayerMove();
         PlayerAttack();
-        concentrate.ConcentrateControl(this.gameObject);
+        //concentrate.ConcentrateControl(this.gameObject); //추후 다시 집중모드를 재부활할 때 활성화할 예정
     }
 
     void PlayerMove() //이동 뿐만 아니라 최대 이동 범위 설정
@@ -83,11 +83,12 @@ public class Player : Character
     //일반적인 슈팅 공격과 영창 시스템의 공격 키들 모음
     void PlayerAttack() 
     {
-        Attack();
+        //Attack();
         ExplosionFild();
 
     }
 
+    /*
     void Attack()
     {
         /*
@@ -113,11 +114,12 @@ public class Player : Character
             Vector3 instanceShootPosition = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
             attack.attackManage.ShootMisiile(attack.missile, this.gameObject, instanceShootPosition, attack.GetBulletSpeed());
         }
+    }
         */
 
 
-    }
-
+    
+    
     /*
     void Attack()
     {

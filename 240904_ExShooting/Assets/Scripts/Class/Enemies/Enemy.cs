@@ -31,7 +31,7 @@ public class Enemy : Character
     {
         if (!isAlreadyDeath)
         {
-            gameManager.SetEnemyCount(gameManager.GetEnemyCount() - 1);
+            //gameManager.SetEnemyCount(gameManager.GetEnemyCount() - 1);
             isAlreadyDeath = true;
         }
     }
