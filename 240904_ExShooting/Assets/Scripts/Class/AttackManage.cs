@@ -44,7 +44,8 @@ public class AttackManage : MonoBehaviour
 
     public void ShootMisiile(GameObject missile, GameObject orderCharacter, Vector3 shootVec, float bulletSpeed)
     {
-        Weapon instanceBullet = Instantiate(missile, shootVec, transform.rotation).GetComponent<Weapon>();
+        //Weapon instanceBullet = Instantiate(missile, shootVec, transform.rotation).GetComponent<Weapon>();
+        Weapon instanceBullet = Instantiate(missile, shootVec, Quaternion.Euler(0, 0, -90f)).GetComponent<Weapon>();
         instanceBullet.SetWeaponData(bulletSpeed, InitTag(orderCharacter), orderCharacter.GetComponent<Character>().GetDamage());
     }
 

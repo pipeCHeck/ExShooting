@@ -21,7 +21,7 @@ public class PlayerAttack : MonoBehaviour
     private int laserLevel = 1;
     private int bulletLevel = 1;
     private int homingMissileLevel = 1;
-    int shootCount;
+    [SerializeField] int shootCount;
 
 
     public bool isTest; //박성준 테스트의 목적으로 추가
@@ -220,7 +220,7 @@ public class PlayerAttack : MonoBehaviour
         for (int i = 0; i < shootCount; i++)
         {
             //각 오브젝트(캐릭터 클래스들)들이 원하는 총의 속도값을 소지한 후, 총알을 발사할 때 해당 값을 전송하여 총알의 속도를 정함.
-            attack.ShootStraightBullet(currentWeaponObject, this.gameObject, new Vector3(instanceShootVec.x - 0.15f + 0.3f * (i - (i / 2)), instanceShootVec.y + 0.1f, 0), 0, bulletSpeed);
+            attack.ShootStraightBullet(currentWeaponObject, this.gameObject, new Vector3(instanceShootVec.x + 0.1f, instanceShootVec.y + (i - (shootCount - 1) / 2f) / 3f, 0), -90, bulletSpeed);
         }
         Debug.Log("에너지 탄 발사 / 레벨: " + bulletLevel);
         // 레벨에 따른 탄환 발사 방식

@@ -17,6 +17,7 @@ public class Wave
     {
         FixedPattern,   // 고정 위치 패턴
         XRandomPattern,  // X값 랜덤 위치 패턴
+        YRandomPattern,  // Y값 랜덤 위치 패턴
     }
 
     public SpawnPattern spawnPattern; // 이 웨이브가 가지는 생성 패턴

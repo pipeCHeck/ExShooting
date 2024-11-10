@@ -162,5 +162,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpPower: 5
-  switchTime: 1
-  moveSpeed: 5
+  switchTime: 0.5
+  moveSpeed: 150

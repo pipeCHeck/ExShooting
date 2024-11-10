@@ -10,6 +10,7 @@ public class ScoreItemMovement : MonoBehaviour
 
     Rigidbody2D rb;
     GameObject player;
+    Vector2 randomDirection;
     bool isFollowPlayer = false; // 플레이어를 따라다닐지 여부
 
     void Start()
@@ -17,21 +18,24 @@ public class ScoreItemMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
 
-        Jump(); // 튀어오르는 점프
+        randomDirection = Random.insideUnitCircle.normalized * Random.Range(1f, 1.5f); // 옆으로 튀어오를 방향 랜덤 설정
+        randomDirection = new Vector2(randomDirection.x + transform.position.x, randomDirection.y + transform.position.y);
         SwitchMode(); // 플레이어 추적 모드 활성화
     }
 
     void Update()
     {
+        Jump();
         FollowPlayer(); // 플레이어 추적
     }
 
     // 처음 튀어오르는 점프 메서드
     void Jump()
     {
-        Vector2 randomDirection = Random.insideUnitCircle.normalized; // 옆으로 튀어오를 방향 랜덤 설정
-        //Debug.Log(randomDirection);
-        rb.AddForce(randomDirection, ForceMode2D.Impulse); // 옆으로 튀어오름
+        if (!isFollowPlayer)
+        {
+            transform.position = Vector2.Lerp(transform.position, randomDirection, Time.deltaTime * 3f);
+        }
     }
 
     // 플레이어 추적 모드 활성화 메서드
@@ -58,7 +62,10 @@ public class ScoreItemMovement : MonoBehaviour
             if (isFollowPlayer)
             {
                 // 플레이어 추적 (보간 적용)
-                gameObject.transform.position = Vector3.Lerp(transform.position, player.transform.position, moveSpeed * Time.deltaTime);
+                //gameObject.transform.position = Vector3.Lerp(transform.position, player.transform.position, moveSpeed * Time.deltaTime);
+                Vector3 direction = (player.transform.position - transform.position).normalized;
+                transform.position += direction * moveSpeed * Time.deltaTime / (Vector3.Distance(player.transform.position, transform.position) + 3f);
+
             }
         }
     }

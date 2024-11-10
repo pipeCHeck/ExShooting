@@ -47,14 +47,20 @@ public class EnemyManager : MonoBehaviour
         {
             // 랜덤 위치에 적 생성 (고정, 랜덤 패턴 나눴으므로 폐쇄함)
             //int spawnIndex = Random.Range(0, wave.spawnPoints.Length);
+            Vector3 pos;
             switch (wave.spawnPattern)
             {
                 case Wave.SpawnPattern.FixedPattern: // 고정 위치 생성 패턴
                     Instantiate(wave.enemyPrefab, wave.spawnPoints[i], Quaternion.identity);
                     break;
                 case Wave.SpawnPattern.XRandomPattern: // X값 랜덤 위치 생성 패턴
-                    Vector3 pos = wave.spawnPoints[0];
-                    pos.x = Random.Range(wave.minMaxRange.x, wave.minMaxRange.y + 1);
+                    pos = wave.spawnPoints[0];
+                    pos.x = Random.Range(wave.minMaxRange.x, wave.minMaxRange.y);
+                    Instantiate(wave.enemyPrefab, pos, Quaternion.identity);
+                    break;
+                case Wave.SpawnPattern.YRandomPattern:
+                    pos = wave.spawnPoints[0];
+                    pos.y = Random.Range(wave.minMaxRange.x, wave.minMaxRange.y);
                     Instantiate(wave.enemyPrefab, pos, Quaternion.identity);
                     break;
             }

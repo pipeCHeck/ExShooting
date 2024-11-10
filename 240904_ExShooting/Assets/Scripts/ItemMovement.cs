@@ -17,7 +17,7 @@ public class ItemMovement : ItemObject
     // Update is called once per frame
     void Update()
     {
-        transform.position += Vector3.down * Time.deltaTime * moveSpeed;
+        transform.position += Vector3.left * Time.deltaTime * moveSpeed;
     }
 
     public string GetTypeItem()
