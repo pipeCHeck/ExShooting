@@ -103,7 +103,7 @@ MonoBehaviour:
   missile: {fileID: 0}
   attackManage: {fileID: 0}
   InputShootPosition:
-  - {x: 0, y: -1, z: 0}
+  - {x: -1, y: 0, z: 0}
   shootCount: 0
 --- !u!114 &5281070261049966993
 MonoBehaviour:

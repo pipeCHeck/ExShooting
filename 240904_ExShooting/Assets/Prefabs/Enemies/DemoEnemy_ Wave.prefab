@@ -88,7 +88,7 @@ MonoBehaviour:
   missile: {fileID: 0}
   attackManage: {fileID: 0}
   InputShootPosition:
-  - {x: 0, y: -1, z: 0}
+  - {x: -1, y: 0, z: 0}
   shootCount: 0
 --- !u!114 &5281070261049966993
 MonoBehaviour:
@@ -130,8 +130,9 @@ MonoBehaviour:
   damage: 0
   score: 0
   attack: {fileID: 0}
-  waveFrequency: 2
-  waveAmplitude: 0.5
+  verticalSpeed: 2
+  minY: -3
+  maxY: 3
 --- !u!1 &7093010564844596647
 GameObject:
   m_ObjectHideFlags: 0

@@ -88,7 +88,7 @@ MonoBehaviour:
   missile: {fileID: 0}
   attackManage: {fileID: 0}
   InputShootPosition:
-  - {x: 0, y: -1, z: 0}
+  - {x: -1, y: 0, z: 0}
   shootCount: 0
 --- !u!114 &5281070261049966993
 MonoBehaviour:
@@ -127,7 +127,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00926e59dc53dd24fb06529aa28936ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  damage: 0
+  score: 0
+  attack: {fileID: 0}
 --- !u!1 &7093010564844596647
 GameObject:
   m_ObjectHideFlags: 0
