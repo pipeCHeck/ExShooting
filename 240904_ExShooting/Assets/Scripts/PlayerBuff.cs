@@ -6,6 +6,7 @@ public class PlayerBuff : MonoBehaviour
 {
     Player player;
     Attacker attacker;
+    PlayerAttack playerAttack;
 
     Player player_;
     Attacker attacker_;
@@ -18,7 +19,7 @@ public class PlayerBuff : MonoBehaviour
     {
         player = GetComponent<Player>();
         attacker = GetComponent<Attacker>();
-
+        playerAttack = GetComponent<PlayerAttack>();
         shotCountBuffCooldown = 0;
     }
 
@@ -37,14 +38,18 @@ public class PlayerBuff : MonoBehaviour
                 Debug.Log("아이템 획득!");
                 switch (collision.gameObject.GetComponent<ItemMovement>().GetTypeItem())
                 {
+                     // 박성준 각 무기타입에 따른 레벨업 추가
                     case "MagicBeamExp":
                         Debug.Log("마력 광선의 강화 룬 발견!");
+                        playerAttack.LevelUpWeapon(WeaponType.MagicBeam);
                         break;
                     case "EnergyBulletExp":
                         Debug.Log("에너지 탄의 강화 룬 발견!");
+                        playerAttack.LevelUpWeapon(WeaponType.EnergyBullet);
                         break;
                     case "HomingOrbExp":
                         Debug.Log("추적 오브의 강화 룬 발견!");
+                        playerAttack.LevelUpWeapon(WeaponType.HomingOrb);
                         break;
                     case "AttackPowerUp":
                         Debug.Log("7초 간 공격력 증가");

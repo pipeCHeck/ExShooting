@@ -8,6 +8,7 @@ public enum WeaponType { MagicBeam, EnergyBullet, HomingOrb }
 public class PlayerAttack : MonoBehaviour
 {
     public WeaponType currentWeapon = WeaponType.EnergyBullet;
+    public WeaponType weaponTypeData;
     [SerializeField] Vector3 shootVec;
     [SerializeField] GameObject currentWeaponObject;
     public GameObject laser; //따로 레이저만 두는 이유는 현재 미사일, 총알의 형태와는 다른 구조의 공격방식이기 때문. 자세한 이야기는 추후 대면에 설명할 예정
@@ -53,7 +54,7 @@ public class PlayerAttack : MonoBehaviour
             }
             else
             {
-                LevelUpCurrentWeapon();
+                LevelUpWeapon(currentWeapon);
             }
             WeaponStateLoad(currentWeapon);
         }
@@ -150,7 +151,7 @@ public class PlayerAttack : MonoBehaviour
     }
 
     //박성준 배열을 기준으로 가져오기 때문에 반환 시 -1을 진행
-    int GetWeaponLevelArray(WeaponType weaponState)
+    public int GetWeaponLevelArray(WeaponType weaponState)
     {
         switch (weaponState)
         {
@@ -166,22 +167,36 @@ public class PlayerAttack : MonoBehaviour
         return -404;
     }
 
-    void LevelUpCurrentWeapon()
+    // 박성준 현재 무기 레벨업 방식은 테스트에 의해 현재 무기 레벨업이나 모든 무기 레벨업, 혹은 아이템에 의한 레벨업이기 때문에 함수이름을 변경함
+    public void LevelUpWeapon(WeaponType type)
     {
-        switch (currentWeapon)
+        switch (type)
         {
             case WeaponType.MagicBeam:
-                laserLevel++;
-                Debug.Log("마력 광선 레벨 업! 현재 레벨: " + laserLevel);
+                if(laserLevel < 5)
+                {
+                    laserLevel++;
+                    Debug.Log("마력 광선 레벨 업! 현재 레벨: " + laserLevel);
+                }
                 break;
             case WeaponType.EnergyBullet:
-                bulletLevel++;
-                Debug.Log("에너지 탄 레벨 업! 현재 레벨: " + bulletLevel);
+                if (bulletLevel < 5)
+                {
+                    bulletLevel++;
+                    Debug.Log("에너지 탄 레벨 업! 현재 레벨: " + bulletLevel);
+                }
                 break;
             case WeaponType.HomingOrb:
-                homingMissileLevel++;
-                Debug.Log("추적 오브 레벨 업! 현재 레벨: " + homingMissileLevel);
+                if(homingMissileLevel < 5)
+                {
+                    homingMissileLevel++;
+                    Debug.Log("추적 오브 레벨 업! 현재 레벨: " + homingMissileLevel);
+                }
                 break;
+        }
+        if(type == currentWeapon) //무기 레벨업 아이템 습득 시 발생한 예외처리. 사용 중인 무기가 레벨업된 무기와 같은 타입이면 실시간으로 강화되게 함
+        {
+            WeaponStateLoad(type);
         }
     }
 
@@ -204,6 +219,7 @@ public class PlayerAttack : MonoBehaviour
         if(isLaserKeyDown == false)
         {
             laser.SetActive(true);
+            WeaponStateLoad(currentWeapon);
             laser.GetComponentInChildren<Laser>().SetWeaponData(bulletSpeed, "PlayerBullet", (int)attackDamage);
             Debug.Log(laser.GetComponentInChildren<Laser>().GetDamage());
             isLaserKeyDown = true;
@@ -299,4 +315,10 @@ public class PlayerAttack : MonoBehaviour
     {
         return shootCount;
     }
+
+    public float GetPlayerDamage()
+    {
+        return attackDamage;
+    }
+
 }

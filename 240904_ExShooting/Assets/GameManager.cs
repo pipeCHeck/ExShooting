@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-
+    public GameObject weaponLevelUp; //레벨업 키트를 우선 게임메이저에 넣었는데, 추후 구조에 의해 변경 시 위치가 바뀔 수 있음
 
     EnemyManager enemyManager;
     [SerializeField] GameObject panel; //기본적인 게임 씬의 설정 상태창. 일시정지, 승리, 패배 등등 이러한 옿션을 가진 패널을 뜻함
@@ -23,13 +23,27 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         PauseKeyDown();
+        AdminKey();
     }
+
+    
 
     void PauseKeyDown()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             GamePause();
+        }
+    }
+
+    void AdminKey()
+    {
+        //게임에서 발생하는 이벤트를 특정 키를 통해 강제로 호출하려는 의도. 현재 레벨업 키트를 생성하는 것 밖에 없다
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            Vector3 instanceVec = new Vector3(11f, 0, 0);
+            GameObject instance = Instantiate(weaponLevelUp, instanceVec, transform.rotation);
+            Destroy(instance, 10f);
         }
     }
 

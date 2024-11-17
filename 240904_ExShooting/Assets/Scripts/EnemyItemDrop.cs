@@ -6,6 +6,7 @@ public class EnemyItemDrop : MonoBehaviour
 {
     public GameObject scorePrefab;
     public GameObject[] itemPrefabs;
+    //public GameObject weaponLevelUpKit; //아이템 3개가 플레이어에게 오는..친구
 
     public void CreateScorePrefabs(Vector3 pos, int amount)
     {
@@ -18,4 +19,12 @@ public class EnemyItemDrop : MonoBehaviour
         if (Random.Range(0, 3) == 0) 
             Instantiate(itemPrefabs[Random.Range(0, itemPrefabs.Length)], pos, Quaternion.identity);
     }
+
+    /*
+    public void SpawnWeaponLevelUp()
+    { 
+        Vector3 instanceSpawnVec = new Vector3(-11f, 0, 0);
+        Instantiate(weaponLevelUpKit, instanceSpawnVec, transform.rotation);
+    }
+    */
 }
