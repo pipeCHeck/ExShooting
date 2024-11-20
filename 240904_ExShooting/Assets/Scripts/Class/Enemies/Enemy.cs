@@ -11,11 +11,11 @@ public class Enemy : Character
         base.SetDamagedHp(damageValue);
         if (GetHp() <= 0)
         {
-            DeathEvent();
+            //DeathEvent();
             Destroy(this.gameObject);
         }
     }
-
+    /* // 스코어 상승 관련 처리는 추후 수정할 예정
     //적이 플레이어에게 죽으면 점수 및 남은 적 감소
     protected override void DeathEvent()
     {
@@ -25,6 +25,7 @@ public class Enemy : Character
         EnemyCountUpdate();
     }
 
+    */
 
     //죽지 않은 채 화면에 벗어난 경우 gameManager 내 잔여 적 카운트 감소
     protected void EnemyCountUpdate()

@@ -14,21 +14,18 @@ public class Character : Object
         hp = maxHp;
     }
     protected override void Init()
-    { 
+    {
         //void
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     //getset
     public virtual void SetDamagedHp(float damageValue)
     {
         hp -= damageValue;
-        
     }
 
-    protected virtual void DeathEvent()
-    {
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-    }
+
 
     // 추후 회복하거나, 강제로 체력이 줄어들 수 있으므로 일방적인 데미지와 다른 개념으로 함수 생성
     public void SetTransHp(float transHpValue) 

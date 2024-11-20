@@ -5,7 +5,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static UnityEngine.UI.CanvasScaler;
 
 public class UI_SelectManager : MonoBehaviour
 {
@@ -24,7 +23,7 @@ public class UI_SelectManager : MonoBehaviour
     Button[] LoadedButtons; //각 씬마다 존재하는 버튼들은 방향키를 기반으로 선택 후 z키를 누르기 때문에 편집하려는 버튼들이 변경되야 할 때 로드를 해야 하기 때문
     [SerializeField]
     GameObject[] buttonDummies; //버튼을 머금는 오브젝트들 모음. 씬 마다 하나일 수도. 여러 개일 수 있기 때문에 배열로 선언
-    int focusingButtonIndex; //배열기준 선택되고있는 버튼값
+    int focusingButtonIndex; //배열 기준 선택되고있는 버튼값
     string sceneName;
 
     void Start()

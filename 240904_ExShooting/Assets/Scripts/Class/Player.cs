@@ -33,8 +33,7 @@ public class Player : Character
         SetTransHp(GetMaxHp());
         SetMoveSpeed(20f); //기본값43 (테스트 중 불편함으로 잠시 줄어놓았음)
         SetTag("Player");
-        //attack.SetAttackDelay(0.05f);
-        //attack.SetBulletSpeed(50f);
+
     }
 
     
@@ -42,13 +41,12 @@ public class Player : Character
     public override void SetDamagedHp(float damageValue)
     {
         base.SetDamagedHp(damageValue);
-    }
-
-    protected override void DeathEvent()
-    {
-        base.DeathEvent();
-        gameManager.SetPlayerLifeCount(gameManager.GetPlayerLifeCount() - 1);
-
+        //여기에 게임 오버 조건 추가함.
+        if(GetHp() <= 0)
+        {
+            Debug.Log("게임 오버");
+            //gameManager. //todo
+        }
     }
 
     //플레이어의 여러가지 입력
@@ -141,7 +139,7 @@ public class Player : Character
     */
 
 
-    //폭탄. 현재 C 키를 통해 발동할 수 있음
+    //폭탄. 현재 C 키를 통해 발동할 수 있음. 추후 공격 관련 스크립트가 변경되어 위치가 변동될 예정
     void ExplosionFild()
     {
         if(Input.GetKeyDown(KeyCode.C))
