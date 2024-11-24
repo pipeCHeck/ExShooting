@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Character : Object
 {
-    protected GameManager gameManager;
     float hp, maxHp;
     public int damage;
 
@@ -16,7 +15,7 @@ public class Character : Object
     protected override void Init()
     {
         //void
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        //gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     //getset

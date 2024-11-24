@@ -5,7 +5,6 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     //Added
-    GameManager gameManager;
 
     public List<Wave> waves = new List<Wave>(); // 미리 정의한 웨이브 목록
     private bool allWavesCompleted = false; // 모든 웨이브가 끝났는지 여부
@@ -13,7 +12,6 @@ public class EnemyManager : MonoBehaviour
     void Start()
     {
         //Added
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         StartCoroutine(ManageWaves());
     }
 
@@ -64,8 +62,7 @@ public class EnemyManager : MonoBehaviour
                     Instantiate(wave.enemyPrefab, pos, Quaternion.identity);
                     break;
             }
-            //Added
-            gameManager.SetEnemyCount(gameManager.GetEnemyCount() + 1);
+            
             yield return new WaitForSeconds(wave.spawnCooldown); // 적 소환 쿨타임
         }
 

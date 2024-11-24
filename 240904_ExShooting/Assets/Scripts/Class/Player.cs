@@ -30,7 +30,7 @@ public class Player : Character
         concentrate = gameObject.AddComponent<PlayerConcentrater>(); // 스크립트 추가
         concentrate.ConcentInit();
         SetMaxHp(3); //노멀 난이도 기준으로 초기 설정
-        SetTransHp(GetMaxHp());
+        InitHp();
         SetMoveSpeed(20f); //기본값43 (테스트 중 불편함으로 잠시 줄어놓았음)
         SetTag("Player");
 
@@ -46,6 +46,7 @@ public class Player : Character
         {
             Debug.Log("게임 오버");
             //gameManager. //todo
+            GameManager.instance.GameOver();
         }
     }
 

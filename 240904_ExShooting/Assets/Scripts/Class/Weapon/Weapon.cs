@@ -49,6 +49,7 @@ public class Weapon : Object
             collision.gameObject.GetComponent<Enemy>().SetDamagedHp(damage);
             Destroy(this.gameObject);
         }
+
         //플레이어가 적의 총알충돌
         if (collision.transform.tag == "Player" && this.GetTag() == "EnemyBullet")
         {

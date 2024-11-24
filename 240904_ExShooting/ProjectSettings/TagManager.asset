@@ -15,6 +15,7 @@ TagManager:
   - Item
   - ScoreItem
   - ItemDropManager
+  - FinalBoss
   layers:
   - Default
   - TransparentFX

@@ -7,8 +7,9 @@ public class EnemyTest : EnemyAttack // 발표를 위한 보여주기식 클래스. 삭제할 예
     GameObject player;
 
     // Start is called before the first frame update
-    void Start()
-    {   
+    protected override void Start()
+    {
+        base.Start();
         Init();
     }
 

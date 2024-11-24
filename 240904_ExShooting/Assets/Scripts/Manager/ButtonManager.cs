@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class ButtonManager : MonoBehaviour
 {
 
-    public static ButtonManager instance;
     //scene을 로드하는 기능들
     public void LoadMainScene()
     {
@@ -40,7 +39,8 @@ public class ButtonManager : MonoBehaviour
     public void BackInTheGame()
     {
         Time.timeScale = 1.0f;
-        this.transform.parent.gameObject.SetActive(false);
+        GameManager.instance.SetAciPanelState(0, false);
+        Debug.Log(this.transform.parent + "??");
     }
     
 
