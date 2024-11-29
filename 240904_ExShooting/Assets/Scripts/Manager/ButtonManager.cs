@@ -17,7 +17,7 @@ public class ButtonManager : MonoBehaviour
 
     public void LoadGamePsjScene()
     {
-        SceneManager.LoadScene("TestPsjScene");
+        SceneManager.LoadScene("TestScenePsj1117");
         Time.timeScale = 1.0f;
     }
 
