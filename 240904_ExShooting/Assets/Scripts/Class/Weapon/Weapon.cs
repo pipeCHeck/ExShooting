@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class Weapon : Object
@@ -38,7 +37,9 @@ public class Weapon : Object
     //보통 오브젝트 회전을 할 때 해당 기능을 이용하면 됨. 요구하는 기획서에 의해 상위 클래스로 이전할 수 있음
     public void SetRotationZ(float value)
     {
-        transform.Rotate(new Vector3(0, 0, value));
+        float instanceRotationX = transform.rotation.eulerAngles.x;
+        float instanceRotationY = transform.rotation.eulerAngles.y;
+        transform.Rotate(instanceRotationX, instanceRotationY, value);
     }
 
     protected virtual void HitCharacterByCollision(ref Collider2D collision)

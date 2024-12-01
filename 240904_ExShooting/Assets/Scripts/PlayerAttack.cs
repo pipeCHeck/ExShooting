@@ -18,6 +18,7 @@ public class PlayerAttack : MonoBehaviour
     float attackDelay; //공격속도
     float bulletSpeed; //총알의 속도
     float attackDamage; //각 무기 타입의 공격력을 저장하는 변수 
+    float energyBulletAttackrange; //일반총알을 동시에 발사할 때 설정하는 각도값
 
     private int laserLevel = 1;
     private int bulletLevel = 1;
@@ -67,6 +68,7 @@ public class PlayerAttack : MonoBehaviour
         laser.GetComponentInChildren<Laser>().SetWeaponData(0, "Player", (int)attackDamage);
         laser.SetActive(false);
         isReadyAttack = true;
+        energyBulletAttackrange = 15f;
         WeaponStateLoad(currentWeapon);
     }
 
@@ -214,6 +216,7 @@ public class PlayerAttack : MonoBehaviour
         return shootVec + transform.position; // 플레이어의 위치와 발사하려는 위치를 불러옴
     }
 
+
     void FireLaser()
     {
         if(isLaserKeyDown == false)
@@ -232,11 +235,26 @@ public class PlayerAttack : MonoBehaviour
 
     void FireBullet()
     {
+        
         Vector3 instanceShootVec = GetShootVector();
-        for (int i = 0; i < shootCount; i++)
+        float angleBase = bulletLevel > 1 ? energyBulletAttackrange * 2f / (bulletLevel - 1) : 0f; // 총알의 각도 사전 계산값. 레벨에 따라 총알의 개수에 따른 요구 각도를 정함. (bulletLevel - 1)부분에 NaN현상이 발생하였고, 이를 대응하기 위해 나누는 값이 0에 대한 부분을 예외 처리하여 처리하는 모습
+        float angle = 0; //각도를 결정하는 최종변수값
+        for (int i = 0; i < bulletLevel; i++)
         {
-            //각 오브젝트(캐릭터 클래스들)들이 원하는 총의 속도값을 소지한 후, 총알을 발사할 때 해당 값을 전송하여 총알의 속도를 정함.
-            attack.ShootStraightBullet(currentWeaponObject, this.gameObject, new Vector3(instanceShootVec.x + 0.1f, instanceShootVec.y + (i - (shootCount - 1) / 2f) / 3f, 0), -90, bulletSpeed);
+            // 실제 적용되는 각도를 균등하게 분배
+            if (bulletLevel == 1)
+            {
+                //레벨이 1이라면 전방으로 곧게 이동하기 위한 예외처리
+                angle = angleBase * i - 90f;
+            }
+            else
+            {
+                angle = angleBase * i - 90f - energyBulletAttackrange;
+            }
+
+            // 각 오브젝트(캐릭터 클래스들)들이 원하는 총의 속도값을 소지한 후, 총알을 발사할 때 해당 값을 전송하여 총알의 속도를 정함.
+            // instanceShootVec.y + ((bulletLevel - 1) / 2) => 발사 위치 수정
+            attack.ShootStraightBullet(currentWeaponObject, this.gameObject, new Vector3(instanceShootVec.x + 0.1f, instanceShootVec.y, 0), angle, bulletSpeed);
         }
         Debug.Log("에너지 탄 발사 / 레벨: " + bulletLevel);
         // 레벨에 따른 탄환 발사 방식
