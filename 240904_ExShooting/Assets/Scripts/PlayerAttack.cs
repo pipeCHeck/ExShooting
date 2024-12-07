@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public enum WeaponType { MagicBeam, EnergyBullet, HomingOrb }
 
@@ -19,6 +20,8 @@ public class PlayerAttack : MonoBehaviour
     float bulletSpeed; //총알의 속도
     float attackDamage; //각 무기 타입의 공격력을 저장하는 변수 
     float energyBulletAttackrange; //일반총알을 동시에 발사할 때 설정하는 각도값
+    float laserScaleValue = 1f; //레이저 무기 레벨업에 따른 크기 계산을 위한 변수값
+
 
     private int laserLevel = 1;
     private int bulletLevel = 1;
@@ -219,7 +222,11 @@ public class PlayerAttack : MonoBehaviour
 
     void FireLaser()
     {
-        if(isLaserKeyDown == false)
+
+        // 레벨에 따른 레이저 발사 방식
+        laser.transform.localScale = new Vector3(laserScaleValue + laserLevel / 2, 1 + laserLevel / 4, 0); //레벨에 따라 레이저 크기 변경
+
+        if (isLaserKeyDown == false)
         {
             laser.SetActive(true);
             WeaponStateLoad(currentWeapon);
@@ -230,7 +237,6 @@ public class PlayerAttack : MonoBehaviour
         }
         laser.transform.position = GetShootVector();
         Debug.Log("마력 광선 발사 / 레벨: " + laserLevel);
-        // 레벨에 따른 레이저 발사 방식
     }
 
     void FireBullet()
