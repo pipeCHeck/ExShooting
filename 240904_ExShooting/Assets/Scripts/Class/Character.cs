@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class Character : Object
 {
-    float hp, maxHp;
-    public int damage;
+    float hp, maxHp; //체력 관련 데이터
+    public int damage; //피해량. 발사하여 피해를 줄 수도, 부딛쳐 피해를 줄 수 있음
 
     protected void InitHp()
     {
-        hp = maxHp;
+        hp = maxHp; //체력초기화이므로 현재 체력을 최대 체력으로 회복함
     }
     protected override void Init()
     {
@@ -21,7 +21,7 @@ public class Character : Object
         hp -= damageValue;
     }
 
-
+    
 
     // 추후 회복하거나, 강제로 체력이 줄어들 수 있으므로 일방적인 데미지와 다른 개념으로 함수 생성
     public void SetTransHp(float transHpValue) 

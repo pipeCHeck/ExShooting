@@ -30,7 +30,7 @@ public class EnemyTest : EnemyAttack // 발표를 위한 보여주기식 클래스. 삭제할 예
         {
             Debug.Log("Player is not found");
         }
-
+        //적의 기초 설정 정의. 체력, 이동속도, 태그 값 정의, 총알도 발사하므로 공격주기 및 총알 속도, 데미지를 정의
         SetMaxHp(10);
         SetTransHp(GetMaxHp());
         SetMoveSpeed(2.5f);
@@ -40,15 +40,17 @@ public class EnemyTest : EnemyAttack // 발표를 위한 보여주기식 클래스. 삭제할 예
         SetDamage(2);
     }
 
-    void Attack()
+    void Attack() //공격 함수
     {
         if(attack != null)
         {
             if (attack.GetToggleState("attack"))
             {
+                //어택 스크립트를 통해 발사위치 최신화
                 attack.AttackReady();
                 for (int i = 0; i < attack.GetShootPositions().Length; i++)
                 {
+                    //이후 총알 발사
                     attack.attackManage.ShootTargetBullet(attack.bullet, this.gameObject, "Player", attack.GetShootPosition(i), attack.GetBulletSpeed());
                 }
             }

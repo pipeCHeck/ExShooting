@@ -7,25 +7,26 @@ using UnityEngine;
 public class Player : Character
 {
     [SerializeField]
-    float moveMaxX, moveMaxY;
+    float moveMaxX, moveMaxY; //플레이어가 화면 내 활동할 수 있는 범위 정의
     //Attacker attack; //attack script must input in inspecter directly
-    PlayerConcentrater concentrate;
+    PlayerConcentrater concentrate; //집중모드. 플레이어의 스킬을 발동하기 위한 스크립트
 
     // Start is called before the first frame update
     void Start()
     {
-        Init();
+        Init(); //플레이어 정보 초기화
     }
 
     // Update is called once per frame
     void Update()
     {
-        PlayerControl();
+        PlayerControl(); //플레이어 조작 관련으로 실행함
     }
 
     protected override void Init()
     {
-        base.Init();
+        // 플레이어 집중모드, 체력 설정, 이동속도 및 태그 값 설정을 함
+        base.Init(); //void
         //attack = gameObject.GetComponent<Attacker>();
         concentrate = gameObject.AddComponent<PlayerConcentrater>(); // 스크립트 추가
         concentrate.ConcentInit();
@@ -37,10 +38,10 @@ public class Player : Character
     }
 
     
-
+    //플레이어가 피해를 받을 때 실행됨
     public override void SetDamagedHp(float damageValue)
     {
-        base.SetDamagedHp(damageValue);
+        base.SetDamagedHp(damageValue); //받은 만큼 체력 감소
         //여기에 게임 오버 조건 추가함.
         if(GetHp() <= 0)
         {
@@ -53,13 +54,14 @@ public class Player : Character
     //플레이어의 여러가지 입력
     void PlayerControl()
     {
-        PlayerMove();
-        PlayerAttack();
+        PlayerMove(); //플레이어 이동 키 관련 함수
+        PlayerAttack(); //플레이어 공격 관련 함수
         //concentrate.ConcentrateControl(this.gameObject); //추후 다시 집중모드를 재부활할 때 활성화할 예정
     }
 
     void PlayerMove() //이동 뿐만 아니라 최대 이동 범위 설정
     {
+        //좌, 우, 상, 하로 방향키에 따라 플레이어가 이동함
         if (Input.GetKey(KeyCode.LeftArrow) && transform.position.x > -moveMaxX)
         {
             ObjectMove(Vector3.left, GetMoveSpeed());
@@ -83,7 +85,7 @@ public class Player : Character
     void PlayerAttack() 
     {
         //Attack();
-        ExplosionFild();
+        ExplosionFild(); //공격 키를 통해(C) 적의 총알 삭제
 
     }
 

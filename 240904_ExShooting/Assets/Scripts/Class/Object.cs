@@ -14,7 +14,7 @@ public class Object : MonoBehaviour
         transform.Translate(moveVec * moveSpeed * Time.deltaTime * 0.5f);
     }
 
-    virtual protected void Init() { }
+    virtual protected void Init() { } //init 가상함수
 
     //getset
     public float GetMoveSpeed()

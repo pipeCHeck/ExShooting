@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class UI_SelectManager : MonoBehaviour
 {
-    //enum을 통해 해당 스크립트가 상황에 따른 처리를 관리함
+    //enum을 통해 해당 스크립트가 상황에 따른 처리를 관리함. 메인화면, 게임화면, 데이터화면이 존재함
     public enum SceneState
     {
         MainScene,
@@ -28,26 +28,26 @@ public class UI_SelectManager : MonoBehaviour
 
     void Start()
     {
-        Init();
+        Init(); //씬 시작 시 초기데이터 정의
         
     }
 
     void Update()
     {
-        KeyManager();
+        KeyManager(); //현재는 사용하지 않으나 버튼을 선택하기 위해 방향키를 눌러 원하는 버튼의 옵션을 포커싱할 수 있음
     }
 
     void Init()
     {
 
-        focusingButtonIndex = 0;
-        sceneName = SceneManager.GetActiveScene().name;
+        focusingButtonIndex = 0; //배열을 사용하므로 초기값은 0으로 정의
+        sceneName = SceneManager.GetActiveScene().name; // 현재 씬 이름을 불러와 씬에 따라 처리를 다르게함
 
 
-        //씬마다 적용해야 하는 타이밍이나 특징이 다르기 떄문에 작업함
+        //씬마다 적용해야 하는 타이밍이나 특징이 다르기 때문에 작업함. 메인화면은 
         switch (sceneState)
         {
-            case SceneState.MainScene:
+            case SceneState.MainScene: //메인화면의 경우 첫 시작 시 바로 적용해야 하므로, 버튼의 정보를 바로 불러와 맨 위의 버튼이 포커스되게 처리함
                 UpdateButtons("Buttons");
                 ButtonFocus();
 
@@ -63,6 +63,7 @@ public class UI_SelectManager : MonoBehaviour
 
     void KeyManager()
     {
+        //버튼이 하나라도 있어야만 실행이 가능
         if (LoadedButtons.Length >= 1)
         {
             if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -75,11 +76,11 @@ public class UI_SelectManager : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Z))
             {
-                ActionButton();
+                ActionButton(); //해당 버튼을 상호작용하고 싶다면 Z키를 눌러 실행
             }
             if (Input.GetKeyDown(KeyCode.X) && sceneName == "GameModeScene")
             {
-                SceneManager.LoadScene("MainScene");
+                SceneManager.LoadScene("MainScene"); //X키를 눌러 뒤로가기할 수 있음
             }
         }
 
@@ -104,10 +105,12 @@ public class UI_SelectManager : MonoBehaviour
 
     void TransButtonFocus(bool isValueUp) 
     {
+        //키를 눌러 포커스되는 버튼이 바뀔 때마다 이전의 버튼 색을 복구하고, 버튼의 배열순서를 편집하여 현재 포커스되는 버튼을 파악할 수 있음.
         LoadedButtons[GetFocusingButtonIndex()].GetComponent<Image>().color = Vector4.zero;
 
         if(isValueUp)
         {
+            //맨 아래 버튼에서 아래 키를 누를 시 맨 위로 이동
             if (focusingButtonIndex == LoadedButtons.Length - 1)
             {
                 focusingButtonIndex = 0;
@@ -119,6 +122,7 @@ public class UI_SelectManager : MonoBehaviour
         }
         else
         {
+            //맨 위 버튼에서 윗 키를 누를 시 맨 아래로 이동
             if (focusingButtonIndex == 0)
             {
                 focusingButtonIndex = LoadedButtons.Length - 1;
@@ -128,9 +132,22 @@ public class UI_SelectManager : MonoBehaviour
                 SetFocusButtonIndex(--focusingButtonIndex);
             }
         }
-        ButtonFocus(); //
+        ButtonFocus(); //변경이 되었으니 해당 번호의 버튼을 포커스처리
     }
 
+    public void ButtonFocus()
+    {
+        //버튼이 포커스되면 버튼색을 변경하여 시각적으로 보여줌
+        Color colorValue = new Vector4(0, 0, 1f, 0.3f);
+        LoadedButtons[GetFocusingButtonIndex()].GetComponent<Image>().color = colorValue;
+    }
+
+    void ActionButton()
+    {
+        LoadedButtons[GetFocusingButtonIndex()].onClick.Invoke(); //이렇게 해도 문제 없음. 각 button들의 onClick부분을 삽입해주면 효율적으로 처리할 수 있음
+    }
+
+    //getset
     void SetFocusButtonIndex(int value)
     {
         focusingButtonIndex = value;
@@ -141,14 +158,5 @@ public class UI_SelectManager : MonoBehaviour
         return focusingButtonIndex;
     }
 
-    public void ButtonFocus()
-    {
-        Color colorValue = new Vector4(0,0,1f,0.3f);
-        LoadedButtons[GetFocusingButtonIndex()].GetComponent<Image>().color = colorValue;
-    }
-
-    void ActionButton()
-    {
-        LoadedButtons[GetFocusingButtonIndex()].onClick.Invoke(); //이렇게 해도 문제 없음. 각 button들의 onClick부분을 삽입해주면 효율적으로 처리할 수 있음
-    }
+    
 }

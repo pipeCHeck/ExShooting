@@ -10,12 +10,14 @@ public class GameDataInfo : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //플레이어의 공격스크립트를 불러온다
         playerAttack = GameObject.FindWithTag("Player").GetComponent<PlayerAttack>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //이후 게임화면에 각각 일반총알/미사일/레이저의 레벨, 데미지, 공격속도를 출력한다
         gameTexts[0].text = ((playerAttack.GetWeaponLevelArray(WeaponType.EnergyBullet) + 1).ToString()) + " / " +
             ((playerAttack.GetWeaponLevelArray(WeaponType.HomingOrb)+1).ToString()) + " / " +
             (playerAttack.GetWeaponLevelArray(WeaponType.MagicBeam)+1).ToString();

@@ -19,7 +19,7 @@ public class UI_PlayerDataInfo : MonoBehaviour
     public int clearCount;
     */
 
-
+    //플레이어데이터를 저장하려는 틀. 현재 작업한 것은 플레이어 이름과 스코어가 있다.
     public void SetPlayerData(string initialData, int score)
     {
         initial = initialData;

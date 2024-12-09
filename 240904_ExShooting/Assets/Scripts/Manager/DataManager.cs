@@ -6,12 +6,13 @@ using UnityEngine;
 //현재 데이터 저장 및 관리에 대한 임시적일 수 있는 스크립트 
 public class DataManager : MonoBehaviour
 {
-    public static DataManager instance;
+    public static DataManager instance; //싱글톤 선언
 
     public List<UI_PlayerDataInfo> scoreList = new List<UI_PlayerDataInfo>();
 
     void Awake()
     {
+        //싱글톤화
         if(instance == null)
         {
             instance = this;
@@ -24,7 +25,7 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    public void SetPlayData(string initialName, int scoreData)
+    public void SetPlayData(string initialName, int scoreData) //플레이어 데이터를저장하는 기능
     {
         GameObject instanceObject = new GameObject("PlayerDataInfo"); // 새로운 GameObject 생성
         UI_PlayerDataInfo instanceList = instanceObject.AddComponent<UI_PlayerDataInfo>(); // 컴포넌트 추가
@@ -32,7 +33,7 @@ public class DataManager : MonoBehaviour
         DontDestroyOnLoad(instanceObject);
 
 
-        scoreList.Add(instanceList);
+        scoreList.Add(instanceList); //데이터를 저장했으니 점수 리스트에 추가
     }
 
 }

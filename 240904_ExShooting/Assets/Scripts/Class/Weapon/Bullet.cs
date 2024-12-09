@@ -23,11 +23,11 @@ public class Bullet : Weapon
 
     protected override void Init()
     {
-        base.Init();
-        moveMaxX = 11f;
+        base.Init(); //void
+        moveMaxX = 11f; //총알의 존재할 수 있는 공간 정의
         moveMaxY = 8f;
-        SetDestroyTime(10f);
-        AutoDestroyByTime();
+        SetDestroyTime(10f); //자동 삭제 시간을 10초로 정의
+        AutoDestroyByTime();//예외적인 버그 방지를 위해 10초 뒤 자동 삭제. 추후 삭제될 수 있음
     }
 
 
@@ -53,7 +53,7 @@ public class Bullet : Weapon
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        HitCharacterByCollision(ref collision);
+        HitCharacterByCollision(ref collision); // 총알 및 출동체의 태그에 따라 피격 여부를 정할 수 있음
     }
 
     

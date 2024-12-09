@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Weapon : Object
 {
-    int damage;
+    int damage; //무기는 기본적으로 데미지가 존재한다
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +17,16 @@ public class Weapon : Object
         
     }
 
+    //무기 정보 저장을 보기 쉽게 처리하기 위한 함수
+    public void SetWeaponData(float moveSpeedValue, string tagString, int damageValue)
+    {
+        SetMoveSpeed(moveSpeedValue);
+        SetTag(tagString);
+        SetDamage(damageValue);
+    }
+
+
+    //getset
     public void SetDamage(int damage)
     {
         this.damage = damage;
@@ -27,12 +37,6 @@ public class Weapon : Object
         return damage;
     }
 
-    public void SetWeaponData(float moveSpeedValue, string tagString, int damageValue)
-    {
-        SetMoveSpeed(moveSpeedValue);
-        SetTag(tagString);
-        SetDamage(damageValue);
-    }
 
     //보통 오브젝트 회전을 할 때 해당 기능을 이용하면 됨. 요구하는 기획서에 의해 상위 클래스로 이전할 수 있음
     public void SetRotationZ(float value)
@@ -42,7 +46,7 @@ public class Weapon : Object
         transform.Rotate(instanceRotationX, instanceRotationY, value);
     }
 
-    protected virtual void HitCharacterByCollision(ref Collider2D collision)
+    protected virtual void HitCharacterByCollision(ref Collider2D collision) //무기 내 발사하는 대상에 따라 무기의 태그값이 변경되는 기능
     {
         //적이 플레이어 총알충돌
         if (collision.transform.tag == "Enemy" && this.GetTag() == "PlayerBullet")

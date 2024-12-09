@@ -17,7 +17,7 @@ public class PlayerConcentrater : MonoBehaviour
 
     public void ConcentInit()
     {
-        maxPower = 100;
+        maxPower = 100; //파워 최대값
         powerUp = 5; // 임시값으로 이것 역시 구조가 변경될 예정
         isReadySkill = false; //스킬이 준비가 안돼야 키입력이나 파워를 쌓을 수 있으니 false 
         buffTime = 10f;
@@ -25,13 +25,14 @@ public class PlayerConcentrater : MonoBehaviour
         coroutines = new IEnumerator[3];
         coroutines[0] = PlalyerSkillBuff();
         coroutines[2] = ConcentraitPowerDown();
-        isPowerUp = true;
+        isPowerUp = true; //파워 업 가능 여부
     }
 
-    public void ConcentrateControl(GameObject character)
+    public void ConcentrateControl(GameObject character) //파워를 관리하기 위한 기능
     {
         if(player == null)
         {
+            //버그 방지용 플레이어 컴포넌트 추가
             player = character.GetComponent<Player>();
         }
 
@@ -62,6 +63,7 @@ public class PlayerConcentrater : MonoBehaviour
             isConcentrating = false;
             StopCoroutine(coroutines[1]);
 
+            //영창 효과 해제 시 파워가 내려가는 기능 실행. 배열값은2
             coroutines[2] = ConcentraitPowerDown();
             StartCoroutine(coroutines[2]);
             coroutines[1] = null;
@@ -73,6 +75,7 @@ public class PlayerConcentrater : MonoBehaviour
             isConcentrating = true;
             StopCoroutine(coroutines[2]);
 
+            //영창 활성화 시 파워가 올라가는 기능 실행. 배열값은1
             coroutines[1] = ConcentraitPowerUp();
             StartCoroutine(coroutines[1]);
             coroutines[2] = null;
@@ -91,7 +94,7 @@ public class PlayerConcentrater : MonoBehaviour
         isReadySkill = false;
     }
 
-    public IEnumerator ConcentraitPowerUp()
+    public IEnumerator ConcentraitPowerUp() //파워가 오르는 코루틴 기능
     {
         //goto문..쓰지 말아야 하는건 맞지만..버그 해결과 효율을 위해서라면 미움받을 용기가 필요하지
     ReConcentrait:
@@ -116,10 +119,12 @@ public class PlayerConcentrater : MonoBehaviour
         }
     }
 
+    //반대로 파워값을 내리는 기능
     IEnumerator ConcentraitPowerDown()
     {
-    RePowerDown:
+    RePowerDown: //goto
         yield return new WaitForSeconds(1f);
+        //1초 주기로(고정된 시간) 파워감소함
         if(power >= 5)
         {
             Debug.Log("파워 감소");
@@ -127,6 +132,7 @@ public class PlayerConcentrater : MonoBehaviour
         }
         else if(power > 0)
         {
+            //파워가 0에 대한 예외처리
             Debug.Log("파워 감소");
             TransPower(0f);
         }
@@ -134,8 +140,10 @@ public class PlayerConcentrater : MonoBehaviour
         
     }
 
+    //집중모드 후 스킬사용 시 5초간 파워를 올릴 수 없게 하는 기능
     IEnumerator ConcentraitCoolTime()
     {
+        //5초 동안 파워를 올리는 모든 변수를 비활성화한다. 이후 다시 파워업 가능 여부를 활성화
         float concentraitCoolTime = 5f;
         isPowerUp = false;
         isConcentrating = false;

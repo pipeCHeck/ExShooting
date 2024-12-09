@@ -8,8 +8,8 @@ using Vector3 = UnityEngine.Vector3;
 public class Attacker : MonoBehaviour
 {
 
-    public GameObject bullet, missile;
-    public AttackManage attackManage;
+    public GameObject bullet, missile;// 대표적으로 기본 총알과 미사일을 정의
+    public AttackManage attackManage; //공격 관련 방법을 불러올 수 있는 스크립트
 
     [SerializeField]
     Vector3[] InputShootPosition; // 각 공격하는 클래스들의 발사위치가 존재함. 하나일 수도 있고 여러곳일 수 있음
@@ -35,19 +35,21 @@ public class Attacker : MonoBehaviour
     }
     private void Start()
     {
-        Init();
+        Init(); // 데이터 초기화
     }
 
     // 해당 초기화는 반드시 하위클래스들이 반드시 호출해줘야 attackManage를 사용할 수 있음.
     public void Init()
     {
         // 오브젝트에 존재하는 스크립트가 아니더라도 유니티는 형식적으로 다른 순수의 스크립트를 불러올려면 해당 코드로 불러와야 됨
+        //스킬 유무, 어택매니지 스크립트를 컴포넌트로 불러옴
         attackManage = gameObject.AddComponent<AttackManage>();
         isReadyAttack = true;
         isReadySkill = true;
         isReadyExplosion = true;
     }
 
+    //발사 준비를 위해 플레이어가 발사하는 위치를 최신화함
     public void AttackReady()
     {
         if(InputShootPosition != null) // 발사위치를 로드하는 과정
@@ -66,7 +68,7 @@ public class Attacker : MonoBehaviour
         StartCoroutine(ActionDelay("attack")); //총을 발사할 것이므로 재발사하기 위한 대기시간.
     }
 
-    //attack, skill, removeBullet
+    //attack, skill, removeBullet 등 원하는 상태를 불러옴
     public bool GetToggleState(string stateName)
     {
         switch (stateName)
@@ -82,7 +84,8 @@ public class Attacker : MonoBehaviour
                 return false;
         }
     }
-
+    
+    //원하는 상태를 재정의하기 위한 함수
     public void SetToggleState(string stateName, bool state)
     {
         switch (stateName)

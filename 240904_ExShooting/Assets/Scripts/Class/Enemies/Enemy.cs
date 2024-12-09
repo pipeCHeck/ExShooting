@@ -5,21 +5,23 @@ using UnityEngine;
 public class Enemy : Character
 {
 
-    public int score;
-    bool isAlreadyDeath;
+    public int score; //적은 기본적으로 플레이어를 위한 점수를 제공함
+    bool isAlreadyDeath; //사망여부를 확인하기 위한 변수
 
      protected virtual void Start()
      {
-        Init();
-        SetTag("Enemy");
+        Init(); //void
+        SetTag("Enemy"); //적이므로 적 태그 설정
         if (score == 0)
         {
+            //초기값 설정
             SetEnemyScore(100);
         }
         Debug.Log("Started enemy");
      }
     public override void SetDamagedHp(float damageValue)
     {
+        //피해를 받을 시 체력이 감소하며, 0이하 일 시 점수를 부여하며 삭제
         base.SetDamagedHp(damageValue);
         if (GetHp() <= 0)
         {
@@ -61,9 +63,10 @@ public class Enemy : Character
 
     protected override void Init()
     {
-
+        //void
     }
 
+    //getset
     public void SetEnemyScore(int value)
     {
         score = value;

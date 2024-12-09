@@ -13,14 +13,14 @@ public class Missile : Bullet
     // Start is called before the first frame update
     void Start()
     {
-        Init();
+        Init(); //초기화
     }
 
     // Update is called once per frame
     protected override void Update()
     {
-        base.Update();
-        TunningObject();
+        base.Update(); //앞으로 이동하면서 화면을 벗어났는 지 확인함
+        TunningObject(); //미사일이므로 회전 유무에 따라 회전할 수 있음
     }
 
     //적의 오브젝트를 탐지하는 목적
@@ -96,7 +96,7 @@ public class Missile : Bullet
 
     protected override void Init()
     {
-        base.Init();
+        base.Init();//총알의 기초 데이터 설정
 
         //미사일은 조금 느리게 움직이기
         SetMoveSpeed(15f);
@@ -106,9 +106,10 @@ public class Missile : Bullet
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        HitCharacterByCollision(ref other);
+        HitCharacterByCollision(ref other); // 충돌된 총알 및 캐릭터 태크 비교
     }
 
+    //getset
     public float GetRotationSpeed()
     {
         return rotationSpeed;

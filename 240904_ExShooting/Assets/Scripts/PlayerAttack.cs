@@ -8,13 +8,13 @@ public enum WeaponType { MagicBeam, EnergyBullet, HomingOrb }
 //김진우
 public class PlayerAttack : MonoBehaviour
 {
-    public WeaponType currentWeapon = WeaponType.EnergyBullet;
-    public WeaponType weaponTypeData;
-    [SerializeField] Vector3 shootVec;
-    [SerializeField] GameObject currentWeaponObject;
+    
+    public WeaponType currentWeapon = WeaponType.EnergyBullet;//현재무기를 정의
+    [SerializeField] Vector3 shootVec; //플레이어가 무기 발사하는 위치
+    [SerializeField] GameObject currentWeaponObject; // 현재 장비된 무기의 프리팹 데이터
     public GameObject laser; //따로 레이저만 두는 이유는 현재 미사일, 총알의 형태와는 다른 구조의 공격방식이기 때문. 자세한 이야기는 추후 대면에 설명할 예정
-    public List<PlayerAttackData> attackData = new List<PlayerAttackData>();
-    AttackManage attack;
+    public List<PlayerAttackData> attackData = new List<PlayerAttackData>(); // 무기 내 정의된 공격력, 공격속도 등 무기의 능력치에 관한 데이터
+    AttackManage attack; // 플레이어가 투사체를 발사하는 방식을 처리하기 위한 스크립트
 
     float attackDelay; //공격속도
     float bulletSpeed; //총알의 속도
@@ -23,6 +23,7 @@ public class PlayerAttack : MonoBehaviour
     float laserScaleValue = 1f; //레이저 무기 레벨업에 따른 크기 계산을 위한 변수값
 
 
+    //무기의 레벨 및 발사 개수
     private int laserLevel = 1;
     private int bulletLevel = 1;
     private int homingMissileLevel = 1;
@@ -31,14 +32,16 @@ public class PlayerAttack : MonoBehaviour
 
     public bool isTest; //박성준 테스트의 목적으로 추가
 
+    //공격가능 유무로 공격 쿨타임을 처리함
     public bool isReadyAttack;
     public bool isReadySkill;
     public bool isReadyExplosion;
+    //레이저의 불필요한 실행을 막기 위한 불값
     bool isLaserKeyDown;
 
     void Start()
     {
-        Init();
+        Init(); //게임 시작 시 플레이어 데이터 초기화
     }
 
     void Update()
@@ -60,19 +63,19 @@ public class PlayerAttack : MonoBehaviour
             {
                 LevelUpWeapon(currentWeapon);
             }
-            WeaponStateLoad(currentWeapon);
+            WeaponStateLoad(currentWeapon); // 무기를 강화 시 그 무기의 레벨에 맞는 데이터를 업데이트함
         }
     }
 
     void Init() //박성준
     {
-        attack = gameObject.AddComponent<AttackManage>();
-        laser = Instantiate(laser);
-        laser.GetComponentInChildren<Laser>().SetWeaponData(0, "Player", (int)attackDamage);
-        laser.SetActive(false);
-        isReadyAttack = true;
-        energyBulletAttackrange = 15f;
-        WeaponStateLoad(currentWeapon);
+        attack = gameObject.AddComponent<AttackManage>(); //어택 매니지 스크립트를 불러옴
+        laser = Instantiate(laser); //레이저를 게임 내에 생성
+        laser.GetComponentInChildren<Laser>().SetWeaponData(0, "Player", (int)attackDamage); //레이저의 능력치를 정의함. 총알과는 다른 방식으로 생성되어 별개로 정의되었음
+        laser.SetActive(false); // 생성 이후 레이저를 보여주지 않는다
+        isReadyAttack = true; // 시작했으니 발사 가능하도록 설정
+        energyBulletAttackrange = 15f; //일반 총알의 발사 각도 값. 클수록 간격이 더 벌어진다
+        WeaponStateLoad(currentWeapon); //현재 무기에 맞는 데이터를 불러옴(공격력, 공격속도, 투사체 속도 등)
     }
 
     // 무기 전환 메서드 (입력: LeftShift)
@@ -80,6 +83,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
+            //좌쉬프트를 누를 때마다 정의된 다음 무기로 변환한다
             switch (currentWeapon)
             {
                 case WeaponType.MagicBeam:
@@ -92,15 +96,14 @@ public class PlayerAttack : MonoBehaviour
                     currentWeapon = WeaponType.MagicBeam;
                     break;
             }
-            WeaponStateLoad(currentWeapon);
-            Debug.Log(currentWeapon);
-            Debug.Log(attackDelay);
+            WeaponStateLoad(currentWeapon); //변환했으니 해당 무기에 맞는 무기 능력치 로드
         }
     }
 
     // 무기 발사 메서드 (입력: Z)
     void ShootWeapon()
     {
+        //Z키 다운을 통해 현재 무기에 맞는 공격을 한다
         if (Input.GetKey(KeyCode.Z) && isReadyAttack == true)
         {
             switch (currentWeapon)
@@ -115,18 +118,19 @@ public class PlayerAttack : MonoBehaviour
                     FireHomingMissile();
                     break;
             }
+            //그러나 예외적으로 레이저는 키다운 형식으로 형체가 온/오프가 되므로 예외처리
             if(currentWeapon != WeaponType.MagicBeam)
             {
-                StartCoroutine(ActionDelay("attack", GetAttackDelay()));
-                isReadyAttack = false;
+                StartCoroutine(ActionDelay("attack", GetAttackDelay())); //레이저의 공격주기를 레벨에 맞춰 레이저 공격하도록 정의
+                isReadyAttack = false; // 추후 버그를 방지하기 위한 처리. 온/오프 구조로 인해 비활성화해야한다
             }
         }
         else if(isLaserKeyDown == true) //레이저만 다른 형태(온/오프형)의 공격이기 때문에 예외 처리하였음
         {
-            isLaserKeyDown = false;
+            isLaserKeyDown = false; //각각 레이저 키다운 여부를 비황설화 및 공격 가능으로 변화
             isReadyAttack = true;
 
-            laser.SetActive(false);
+            laser.SetActive(false); //레이저의 형체를 비활성화
         }
 
     }
@@ -134,10 +138,11 @@ public class PlayerAttack : MonoBehaviour
     //박성준 무기를 변경할 때마다 해당 무기를 변경하기 위해 무기 리스트에 찾는다
     void WeaponStateLoad(WeaponType weaponName) 
     {
-        foreach(PlayerAttackData instanceData in attackData)
+        foreach(PlayerAttackData instanceData in attackData) //무기 데이터 내에 현재 플레이어의 무기와 같은 데이터를 탐색
         {
             if(instanceData.weaponName == weaponName.ToString())
             {
+                //발견 시 해당 무기의 레벨에 기반한 데이터를 플레이어가 받아들임
                 WeaponDataInit(instanceData, GetWeaponLevelArray(weaponName));
                 return;
             }
@@ -147,6 +152,7 @@ public class PlayerAttack : MonoBehaviour
     //박성준 이후 해당 무기 타입의 레벨에 기반하여 데이터를 초기화한다. 무기를 변경하거나, 착용 중인 무기가 레벨업을 하게 되면 해당 함수를 사용하게 된다
     void WeaponDataInit(PlayerAttackData attackData, int levelValue)
     {
+        //해당 무기의 공격속도, 투사체 속도, 데미지 설정, 발사 개수 등 기본적인 공격에 관련된 데이터를 재정의한다
         currentWeaponObject = attackData.weapon;
         attackDelay = attackData.attackDelay[levelValue];
         bulletSpeed = attackData.shootSpeed[levelValue];
@@ -160,6 +166,7 @@ public class PlayerAttack : MonoBehaviour
     {
         switch (weaponState)
         {
+            //정의된 레벨은 1부터 시작하나, 배열은 0부터 시작하므로 모두 -1을 함
             case WeaponType.MagicBeam:
                 return laserLevel - 1;
             case WeaponType.EnergyBullet:
@@ -177,6 +184,7 @@ public class PlayerAttack : MonoBehaviour
     {
         switch (type)
         {
+            //획득한 무기 강화 아이템에 따라 그에 맞는 무기를 강화함
             case WeaponType.MagicBeam:
                 if(laserLevel < 5)
                 {
@@ -228,6 +236,7 @@ public class PlayerAttack : MonoBehaviour
 
         if (isLaserKeyDown == false)
         {
+            //레이저의 형체를 활성화 후, 현재 무기가 레이저임을 선언함. 이후 레이저 내 능력치(공격력, 공격주기 등)를 재정의 후 키를 누르고 있음을 알림
             laser.SetActive(true);
             WeaponStateLoad(currentWeapon);
             laser.GetComponentInChildren<Laser>().SetWeaponData(bulletSpeed, "PlayerBullet", (int)attackDamage);
@@ -242,7 +251,7 @@ public class PlayerAttack : MonoBehaviour
     void FireBullet()
     {
         
-        Vector3 instanceShootVec = GetShootVector();
+        Vector3 instanceShootVec = GetShootVector(); //임시로 발사 위치를 저장함
         float angleBase = bulletLevel > 1 ? energyBulletAttackrange * 2f / (bulletLevel - 1) : 0f; // 총알의 각도 사전 계산값. 레벨에 따라 총알의 개수에 따른 요구 각도를 정함. (bulletLevel - 1)부분에 NaN현상이 발생하였고, 이를 대응하기 위해 나누는 값이 0에 대한 부분을 예외 처리하여 처리하는 모습
         float angle = 0; //각도를 결정하는 최종변수값
         for (int i = 0; i < bulletLevel; i++)
@@ -255,6 +264,7 @@ public class PlayerAttack : MonoBehaviour
             }
             else
             {
+                //레벨이 2라면 플레이어 정면 기준 반반식 분배됨
                 angle = angleBase * i - 90f - energyBulletAttackrange;
             }
 
@@ -268,6 +278,7 @@ public class PlayerAttack : MonoBehaviour
 
     void FireHomingMissile()
     {
+        //임시로 발사위치를 정의 후 미사일 능력치 정의 후 발사
         Vector3 instanceShootVec = GetShootVector();
         attack.ShootMisiile(currentWeaponObject, this.gameObject, instanceShootVec, bulletSpeed);
 
@@ -283,7 +294,7 @@ public class PlayerAttack : MonoBehaviour
         SetToggleState(actionType, true);
     }
 
-    //attack, skill, removeBullet
+    //attack, skill, removeBullet 을 자유롭게 불러옴
     public bool GetToggleState(string stateName)
     {
         switch (stateName)
@@ -320,6 +331,7 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
+    //getset문
     public void SetAttackDelay(float delayValue)
     {
         attackDelay = delayValue;
