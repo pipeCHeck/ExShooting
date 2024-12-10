@@ -61,7 +61,7 @@ public class EnemyTest : EnemyAttack // 발표를 위한 보여주기식 클래스. 삭제할 예
         }
     }
 
-    // 이동 메서드 (짜피 버릴거라니 잠깐 씀)
+    // 이동 메서드
     void Move()
     {
         ObjectMove(Vector3.left * 1.5f, GetMoveSpeed());
